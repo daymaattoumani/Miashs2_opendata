@@ -4,7 +4,8 @@
   "description": "Open data project in m2 Miashs",
   "main": "server.js",
   "dependencies": {
-    "clarifai": "^2.9.1"
+    "clarifai": "^2.9.1",
+    "express": "^4.17.1"
   },
   "devDependencies": {},
   "scripts": {
