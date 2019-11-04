@@ -12,9 +12,10 @@ const app = new Clarifai.App({
 });
 
 
-app.models.predict("c0c0ac362b03416da06ab3fa36fb58e3", "https://samples.clarifai.com/demographics.jpg").then(
+app.models.predict("e466caa0619f444ab97497640cefc4dc", "https://samples.clarifai.com/celebrity.jpg").then(
     function(response) {
-        console.log(response);
+
+        console.log(response.outputs[0].data.regions[0].data.concepts[0]);
     },
     function(err) {
         // there was an error
