@@ -1,0 +1,24 @@
+{
+  "name": "miashs2_opendata",
+  "version": "1.0.0",
+  "description": "Open data project in m2 Miashs",
+  "main": "server.js",
+  "dependencies": {
+    "clarifai": "^2.9.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daymaattoumani/Miashs2_opendata.git"
+  },
+  "author": "Andry Barbaza, Dayma Attoumani, Mourad Inan, Solal Vernier",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daymaattoumani/Miashs2_opendata/issues"
+  },
+  "homepage": "https://github.com/daymaattoumani/Miashs2_opendata#readme"
+}
