@@ -14,6 +14,7 @@ var storage = multer.diskStorage({
     });
 var upload = multer({ storage: storage });
 
+
 // The JavaScript client works in both Node.js and the browser.
 var express = require('express');
 var bodyParser = require("body-parser");
@@ -22,27 +23,34 @@ app.use(express.static('server'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return new Buffer(bitmap).toString('base64');
+}
+
 app.post('/home', upload.single('celebrity'), function(req,res){
-        console.log(req.body);
         if(req.file) {
-            res.json(req.file);
+            console.log(req.file);
+            const predicteur = new Clarifai.App({
+                apiKey: '5cc2e6a2ca6342c8adec0429f0627af3'
+            });
+            var encoded = base64_encode(req.file.path);
+            predicteur.models.predict("e466caa0619f444ab97497640cefc4dc", {base64: encoded}).then(
+                function(response) {
+                    res.json(response.outputs[0].data.regions[0].data.concepts[0]);
+                },
+                function(err) {
+                    console.log(err);
+                }
+            );
         }
         else throw 'error';
     });
 //
-function prediction(){
-    const predicteur = new Clarifai.App({
-        apiKey: '5cc2e6a2ca6342c8adec0429f0627af3'
-    });
-    predicteur.models.predict("e466caa0619f444ab97497640cefc4dc", req.body.celebrity).then(
-        function(response) {
-            //res.json({'message':  'ok'});
-            res.json(response.outputs[0].data.regions[0].data.concepts[0]);
-        },
-        function(err) {
-            // there was an error
-        }
-    );
+function prediction(filename){
 }
 
 
