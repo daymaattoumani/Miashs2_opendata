@@ -4,6 +4,9 @@ const Clarifai = require('clarifai');
 
 const fs = require('fs');
 
+const fetch = require('fetch').fetchUrl;
+
+
 // The JavaScript client works in both Node.js and the browser.
 var express = require('express');
 var app = express();
@@ -39,6 +42,14 @@ app.get('/script', function(req, res){
         res.write(data);
         res.end()
     })
+});
+
+app.get('/news', function(req,res){
+    var trump = 'Trump';
+    fetch("https://newsapi.org/v2/everything?q="+trump+"&apiKey=0738b24ebbfa4397b1857b42aea8bd2e", function(error, meta, body){
+        console.log(body.toString());
+        res.json(body.toString());
+    });
 });
 
 app.listen(3000, function () {
