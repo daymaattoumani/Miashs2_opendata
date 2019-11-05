@@ -6,7 +6,16 @@
 
 </head>
 <body>
-<form><input type="image" alt=""> </form>
+
+
+<form method="post" action="/home" enctype="multipart/form-data">
+    <label for="celebrity">Upload a picture please:</label>
+    <input type="file"
+           id="celebrity" name="celebrity"
+           accept="image/png, image/jpeg">
+    <input type="submit">
+</form>
+
 
 </body>
 <script src="/script"></script>
