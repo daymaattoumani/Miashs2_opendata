@@ -4,6 +4,8 @@ const Clarifai = require('clarifai');
 const fs = require('fs');
 const multer = require('multer');
 
+const fetch = require('fetch').fetchUrl;
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, __dirname + "/images")
@@ -33,15 +35,17 @@ function base64_encode(file) {
 
 app.post('/home', upload.single('celebrity'), function(req,res){
         if(req.file) {
-            console.log(req.file);
             const predicteur = new Clarifai.App({
                 apiKey: '5cc2e6a2ca6342c8adec0429f0627af3'
             });
             var encoded = base64_encode(req.file.path);
             predicteur.models.predict("e466caa0619f444ab97497640cefc4dc", {base64: encoded}).then(
                 function(response) {
-                    res.json(response.outputs[0].data.regions[0].data.concepts[0]);
-                },
+                    var q = response.outputs[0].data.regions[0].data.concepts[0];
+                    fetch("https://newsapi.org/v2/everything?q="+ q.name + "&apiKey=0738b24ebbfa4397b1857b42aea8bd2e", function(error, meta, body){
+                        res.json(body.toString());
+                    });
+                    },
                 function(err) {
                     console.log(err);
                 }
@@ -49,9 +53,6 @@ app.post('/home', upload.single('celebrity'), function(req,res){
         }
         else throw 'error';
     });
-//
-function prediction(filename){
-}
 
 
 app.get('/index', function(req,res){
