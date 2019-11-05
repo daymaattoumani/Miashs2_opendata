@@ -1,0 +1,77 @@
+// Require the client
+
+const Clarifai = require('clarifai');
+const fs = require('fs');
+const multer = require('multer');
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, __dirname + "/images")
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+        }
+    });
+var upload = multer({ storage: storage });
+
+
+// The JavaScript client works in both Node.js and the browser.
+var express = require('express');
+var bodyParser = require("body-parser");
+var app = express();
+app.use(express.static('server'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
+function base64_encode(file) {
+    // read binary data
+    var bitmap = fs.readFileSync(file);
+    // convert binary data to base64 encoded string
+    return new Buffer(bitmap).toString('base64');
+}
+
+app.post('/home', upload.single('celebrity'), function(req,res){
+        if(req.file) {
+            console.log(req.file);
+            const predicteur = new Clarifai.App({
+                apiKey: '5cc2e6a2ca6342c8adec0429f0627af3'
+            });
+            var encoded = base64_encode(req.file.path);
+            predicteur.models.predict("e466caa0619f444ab97497640cefc4dc", {base64: encoded}).then(
+                function(response) {
+                    res.json(response.outputs[0].data.regions[0].data.concepts[0]);
+                },
+                function(err) {
+                    console.log(err);
+                }
+            );
+        }
+        else throw 'error';
+    });
+//
+function prediction(filename){
+}
+
+
+app.get('/index', function(req,res){
+    fs.readFile("client/index.html", function(err, data) {
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(data);
+        res.end()
+    })
+});
+
+app.get('/script', function(req, res){
+    fs.readFile("client/script.js", function(err, data) {
+        res.writeHead(200, {'Content-Type': 'application/javascript'});
+        res.write(data);
+        res.end()
+    })
+});
+
+app.listen(3000, function () {
+    console.log('Example app listening on port 3000!')
+});
+
+
