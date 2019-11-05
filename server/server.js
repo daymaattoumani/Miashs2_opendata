@@ -46,8 +46,7 @@ app.post('/home', upload.single('celebrity'), function(req,res){
                         console.log();
                         var articles = JSON.parse(body.toString()).articles;
                         var titles = articles.map(a => { return a.title;});
-
-
+                        console.log(titles);
                         res.json(titles);
                     });
                     },

@@ -8,17 +8,17 @@
 <body>
 
 
-<form method="post" action="/home" enctype="multipart/form-data">
+<form id='form' method="post" action="/home" enctype="multipart/form-data">
     <label for="celebrity">Upload a picture please:</label>
     <input type="file"
            id="celebrity" name="celebrity"
            accept="image/png, image/jpeg">
-    <input type="submit" onclick="loadFile()">
+    <input type="submit" onclick="loadFile(event)">
 </form>
 
 <img id="img">
 
-
+<p id="toto"></p>
 </body>
 <script src="/script"></script>
 </html>
