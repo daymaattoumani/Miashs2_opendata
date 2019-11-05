@@ -43,7 +43,12 @@ app.post('/home', upload.single('celebrity'), function(req,res){
                 function(response) {
                     var q = response.outputs[0].data.regions[0].data.concepts[0];
                     fetch("https://newsapi.org/v2/everything?q="+ q.name + "&apiKey=0738b24ebbfa4397b1857b42aea8bd2e", function(error, meta, body){
-                        res.json(body.toString());
+                        console.log();
+                        var articles = JSON.parse(body.toString()).articles;
+                        var titles = articles.map(a => { return a.title;});
+
+
+                        res.json(titles);
                     });
                     },
                 function(err) {
