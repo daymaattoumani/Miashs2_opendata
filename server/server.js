@@ -3,9 +3,7 @@
 const Clarifai = require('clarifai');
 const fs = require('fs');
 const multer = require('multer');
-
 const fetch = require('fetch').fetchUrl;
-
 var titreArticles = null;
 
 var storage = multer.diskStorage({
@@ -21,6 +19,7 @@ var upload = multer({ storage: storage });
 
 // The JavaScript client works in both Node.js and the browser.
 var express = require('express');
+var csv = require('csv-express')/* npm install csv-express*/
 var bodyParser = require("body-parser");
 var app = express();
 app.use(express.static('server'));
@@ -32,7 +31,7 @@ function base64_encode(file) {
     // read binary data
     var bitmap = fs.readFileSync(file);
     // convert binary data to base64 encoded string
-    return new Buffer(bitmap).toString('base64');
+    return new Buffer.from(bitmap).toString('base64');
 }
 
 app.post('/home', upload.single('celebrity'), function(req,res){
@@ -45,10 +44,13 @@ app.post('/home', upload.single('celebrity'), function(req,res){
                 function(response) {
                     var q = response.outputs[0].data.regions[0].data.concepts[0];
                     fetch("https://newsapi.org/v2/everything?q="+ q.name + "&apiKey=0738b24ebbfa4397b1857b42aea8bd2e", function(error, meta, body){
-                        console.log();
+                        console.log("coucou");
                         var articles = JSON.parse(body.toString()).articles;
                         var titles = articles.map(a => { return a.title;});
                         titreArticles = titles;
+                        titreArticles = titreArticles.map(function (t) {
+                            return {'title': t};
+                        });
 
                         res.json(titles);
                     });
@@ -79,14 +81,17 @@ app.get('/script', function(req, res){
 });
 
 app.get('/download', function(req,res) {
-    console.log(titreArticles);
+
     res.format({
         'application/json': function () {
-            res.json(titreArticles);
+            var tempoj = titreArticles;
+
+            res.json(tempoj);
         },
 
         'application/csv': function () {
-            res.csv([{name : 'toto'}, {name : 'baptiste'}, {name : 'gabriel'}]);
+            var tempoc = titreArticles;
+            res.csv(tempoc, true);
         }
     })
 })
