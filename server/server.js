@@ -80,7 +80,7 @@ app.get('/news/:celebrity', function(req,res) {
     fetch("https://newsapi.org/v2/everything?q=" + req.params.celebrity + "&apiKey=0738b24ebbfa4397b1857b42aea8bd2e", function (error, meta, body) {
         var articles = JSON.parse(body.toString()).articles;
         var news = articles.filter(a => a.urlToImage != null).map(function(a){
-            return {title: a.title, image: a.urlToImage, url: a.url, description:a.description};
+            return {title: a.title, image: a.urlToImage, url: a.url, description: a.description};
         });
         titreArticles = news;
         res.json(news);
