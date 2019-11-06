@@ -47,8 +47,8 @@ div.container {
 }
 
 #img {
-    max-width: 45vh;
     opacity: 0;
+    width: 100%;
 }
 
 #titi {
@@ -95,7 +95,6 @@ div.container {
     top: 0;
     bottom: 0;
     height: 10vh;
-    width: 100%;
 }
 
 .card .card-title {
@@ -106,4 +105,10 @@ div.container {
 
 .card .card-title:hover {
     text-decoration: underline;
+}
+
+.card.horizontal .card-image img {
+    border-radius: 2px 0 0 2px;
+    max-width: 100%;
+    width: 90%;
 }

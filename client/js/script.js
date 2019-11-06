@@ -50,15 +50,14 @@ function enableButton() {
 
 function getNews() {
     document.getElementById("yesnoBtn").remove();
-    document.getElementById('toto').innerText = "";
-    var lang = document.getElementById('lang').value;
     var html = "<div id='news' class='col m8 l8 s8'>";
 
     var prediction =document.getElementById("toto").innerText;
+    document.getElementById('toto').innerText = "";
+
     document.getElementById("guessingPart").remove();
     fetch('/news/'+prediction, {
-        method: 'GET',
-        headers: {'Accept-Language': lang}
+        method: 'GET'
     }).then(function (response) {
         response.json().then(function (news) {
             news.forEach(function(n) {
@@ -75,7 +74,7 @@ function getNews() {
                     "      <div class=\"card-stacked\">\n" +
                     "        <div class=\"card-content\">\n" +
                     "<a target='_blank' href=\""+n.url+"\"><span class=\"card-title\">"+n.title.substring(0,40) + "..."+"</span></a>\n" +
-                    "          <p>I am a very simple card. I am good at containing small bits of information.</p>\n" +
+                    "          <p>"+n.description+"</p>\n" +
                     "        </div>\n" +
                     "      </div>\n" +
                     "</div>" +
