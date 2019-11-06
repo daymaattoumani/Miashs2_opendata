@@ -68,8 +68,32 @@ app.get('/index', function(req,res){
 });
 
 app.get('/script', function(req, res){
-    fs.readFile("client/script.js", function(err, data) {
-        res.writeHead(200, {'Content-Type': 'application/javascript'});
+    fs.readFile("client/js/script.js", function(err, data) {
+        res.writeHead(200, {'Content-Type': 'text/javascript'});
+        res.write(data);
+        res.end()
+    })
+});
+
+app.get('/materialize.min.css', function(req, res){
+    fs.readFile("client/css/materialize.min.css", function(err, data) {
+        res.writeHead(200, {'Content-Type': 'text/css'});
+        res.write(data);
+        res.end()
+    })
+});
+
+app.get('/style.css', function(req, res){
+    fs.readFile("client/css/style.css", function(err, data) {
+        res.writeHead(200, {'Content-Type': 'text/css'});
+        res.write(data);
+        res.end()
+    })
+});
+
+app.get('/materialize.min.js', function(req, res){
+    fs.readFile("client/js/materialize.min.js", function(err, data) {
+        res.writeHead(200, {'Content-Type': 'text/js'});
         res.write(data);
         res.end()
     })
