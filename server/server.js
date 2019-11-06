@@ -50,11 +50,11 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
                 //replace this value with your valid subscription key.
                 let serviceKey = "0c10ee92fb0140b58d220bf33f12a68c";
 
-//instantiate the image search client
+                //instantiate the image search client
                 let credentials = new CognitiveServicesCredentials(serviceKey);
                 let imageSearchApiClient = new ImageSearchAPIClient(credentials);
 
-//a helper function to perform an async call to the Bing Image Search API
+                //a helper function to perform an async call to the Bing Image Search API
                 const sendQuery = async () => {
                     return await imageSearchApiClient.imagesOperations.search(predicted_name);
                 };
@@ -64,13 +64,9 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
                         console.log("No image results were found.");
                     }
                     else {
-                        console.log(imageResults.value[0]);
                         res.json({url: imageResults.value[0].contentUrl, name: predicted_name});
                     }
-                })
-                    .catch(err => console.error(err))
-
-                //res.json(predicted_name);
+                }).catch(err => console.error(err))
 
             },
             function(err) {
@@ -81,7 +77,10 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
     else throw 'error';
 });
 app.get('/news/:celebrity', function(req,res) {
-    fetch("https://newsapi.org/v2/everything?q=" + req.query.celebrity + "&apiKey=0738b24ebbfa4397b1857b42aea8bd2e", function (error, meta, body) {
+    console.log(JSON.stringify(req.headers));
+    console.log(req.params.celebrity);
+
+    fetch("https://newsapi.org/v2/everything?q=" + req.params.celebrity + "&apiKey=0738b24ebbfa4397b1857b42aea8bd2e", function (error, meta, body) {
         var articles = JSON.parse(body.toString()).articles;
         var news = articles.filter(a => a.urlToImage != null).map(function(a){
             return {title: a.title, image: a.urlToImage, url: a.url};
@@ -145,7 +144,8 @@ app.get('/download', function(req,res) {
             res.csv(tempoc, true);
         }
     })
-})
+});
+
 
 
 app.listen(port, function () {

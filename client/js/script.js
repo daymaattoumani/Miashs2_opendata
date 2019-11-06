@@ -51,9 +51,11 @@ function enableButton() {
 function getNews() {
     document.getElementById("yesnoBtn").remove();
     document.getElementById('toto').innerText = "";
+    var lang = document.getElementById('lang').value;
     var prediction =document.getElementById("toto").innerText;
     fetch('/news/'+prediction, {
         method: 'GET',
+        headers: {'Accept-Language': lang}
     }).then(function (response) {
         response.json().then(function (news) {
             news.forEach(function(n) {
