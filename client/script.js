@@ -8,7 +8,7 @@ var loadFile = function(event) {
     var data = new FormData();
     data.append('celebrity', input.files[0]);
 
-    fetch('/home', {
+    fetch('/predict', {
         method: 'POST',
         body: data
     }).then(function (response) {
