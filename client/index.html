@@ -26,22 +26,22 @@
             </div>
         </div>
         <div class="center">
-        <button id="submitBtn" class="btn waves-effect waves-light disabled" type="submit" onclick="loadFile(event)">Guess
-            <i class="material-icons right">send</i>
-        </button>
+            <button id="submitBtn" class="btn waves-effect waves-light disabled" type="submit" onclick="loadFile(event)">Guess
+                <i class="material-icons right">send</i>
+            </button>
         </div>
     </form>
 </div>
 
 <div class="container" id="guessContainer">
-    <div class="row">
-        <div class="col m5 l5 s12">
+    <div class="row center">
+        <div class="col m4 l4 s12">
             <img id="img">
         </div>
-        <div class="col m5 s12 l2">
-            <h2 id="isit"><i>is it ...</i></h2>
+        <div class="col m4 l4 s12">
+            <h2 id="isit"><i>I think of...</i></h2>
         </div>
-        <div class="col m5 l5 s12">
+        <div class="col m4 l4 s12">
             <div class="preloader-wrapper big active" id="preloader">
                 <div class="spinner-layer spinner-blue-only">
                     <div class="circle-clipper left">
@@ -57,18 +57,21 @@
         </div>
     </div>
     <div class="row center" id="yesnoBtn">
-            <a class="btn-floating btn-large waves-effect waves-light green pulse"><i class="material-icons">check</i></a>
-            <a class="btn-floating btn-large waves-effect waves-light red pulse"><i class="material-icons">close</i></a>
+        <a class="btn-floating btn-large waves-effect waves-light green pulse" onclick="getNews()"><i class="material-icons">check</i></a>
+        <a class="btn-floating btn-large waves-effect waves-light red pulse"><i class="material-icons">close</i></a>
 
-        <div>
-            <input type="radio" id="csv" name="download" value="csv" checked>
-            <label for="csv">Télécharger en csv</label>
-        </div>
-
-        <div>
-            <input type="radio" id="json" name="download" value="json">
-            <label for="csv">Télécharger en json</label>
-        </div>
+        <p>
+            <label>
+                <input class="with-gap" id="csv" value="csv" name="download" type="radio" />
+                <span>CSV</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input class="with-gap" id="json" value="json" name="download" type="radio" />
+                <span>JSON</span>
+            </label>
+        </p>
 
         <div>
             <button onclick="download()"> Envoyer </button>
