@@ -2,36 +2,84 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Guess who?</title>
-
+    <title>Who is it?</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="/style.css"  media="screen,projection"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
+<h2 class="white-text center">Who is it?</h2>
 
-
+<div class="container" id="formContainer">
     <form id='form' method="post" action="/home" enctype="multipart/form-data">
-        <label for="celebrity">Upload a picture please:</label>
-        <input type="file"
-               id="celebrity" name="celebrity"
-               accept="image/png, image/jpeg">
-        <input type="submit" onclick="loadFile(event)">
+        <div class="file-field input-field">
+            <div class="btn">
+                <i class="material-icons">attach_file</i>
+                <input onchange="enableButton()" accept="image/png, image/jpeg" id="celebrity" name="celebrity" type="file">
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate"placeholder="Upload your celebrity picture"  type="text">
+            </div>
+        </div>
+        <div class="center">
+            <button id="submitBtn" class="btn waves-effect waves-light disabled" type="submit" onclick="loadFile(event)">Guess
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
     </form>
+</div>
 
-    <img id="img">
-
-    <p id="toto"></p>
-    <div>
-        <input type="radio" id="csv" name="download" value="csv" checked>
-        <label for="csv">Télécharger en csv</label>
+<div class="container" id="guessContainer">
+    <div class="row center">
+        <div class="col m4 l4 s12">
+            <img id="img">
+        </div>
+        <div class="col m4 l4 s12">
+            <h2 id="isit"><i>I think of...</i></h2>
+        </div>
+        <div class="col m4 l4 s12">
+            <div class="preloader-wrapper big active" id="preloader">
+                <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+            </div>
+            <p id="toto"></p>
+        </div>
     </div>
+    <div class="row center" id="yesnoBtn">
+        <a class="btn-floating btn-large waves-effect waves-light green pulse" onclick="getNews()"><i class="material-icons">check</i></a>
+        <a class="btn-floating btn-large waves-effect waves-light red pulse"><i class="material-icons">close</i></a>
 
-    <div>
-        <input type="radio" id="json" name="download" value="json">
-        <label for="csv">Télécharger en json</label>
-    </div>
+        <p>
+            <label>
+                <input class="with-gap" id="csv" value="csv" name="download" type="radio" />
+                <span>CSV</span>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input class="with-gap" id="json" value="json" name="download" type="radio" />
+                <span>JSON</span>
+            </label>
+        </p>
 
-    <div>
-        <button onclick="download()"> Envoyer </button>
+        <div>
+            <button onclick="download()"> Envoyer </button>
+        </div>
     </div>
-</body>
+</div>
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="/materialize.min.js"></script>
 <script src="/script"></script>
+</body>
 </html>
