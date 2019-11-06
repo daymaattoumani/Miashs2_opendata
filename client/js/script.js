@@ -2,7 +2,7 @@ const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 };
 
- function loadFile (event) {
+function loadFile (event) {
 
     event.preventDefault();
     var image = document.getElementById('img');
@@ -46,16 +46,39 @@ function enableButton() {
 
 function getNews() {
     document.getElementById("yesnoBtn").remove();
-    document.getElementById('toto').innerText = "";
+    var html = "<div id='news' class='col m8 l8 s8'>";
+
     var prediction =document.getElementById("toto").innerText;
+    console.log("prediction",prediction);
+    document.getElementById("guessingPart").remove();
     fetch('/news/'+prediction, {
         method: 'GET',
     }).then(function (response) {
         response.json().then(function (news) {
             news.forEach(function(n) {
+                console.log(n);
                 console.log(n.title);
-                document.getElementById('toto').innerText += n.title;
+                html +=
+                    "    <div class=\"card horizontal\">\n" +
+                    "<div class='row'>" +
+                    "<div class='col m3 s3 l3'>" +
+                    "      <div class=\"card-image\">\n" +
+                    "        <img src=\""+n.image+"\">\n" +
+                    "      </div>\n" +
+                    "</div>" +
+                    "<div class='col m9 s9 l9'>" +
+                    "      <div class=\"card-stacked\">\n" +
+                    "        <div class=\"card-content\">\n" +
+                    "<a target='_blank' href=\""+n.url+"\"><span class=\"card-title\">"+n.title.substring(0,40) + "..."+"</span></a>\n" +
+                    "          <p>I am a very simple card. I am good at containing small bits of information.</p>\n" +
+                    "        </div>\n" +
+                    "      </div>\n" +
+                    "</div>" +
+                    "</div>" +
+                    "    </div>";
             });
+            html +="</div>";
+            document.getElementById("guessRow").innerHTML += html;
         })
     })
 }
