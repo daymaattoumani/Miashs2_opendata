@@ -87,6 +87,7 @@ app.get('/download', function(req,res) {
             var tempoj = titreArticles;
 
             res.json(tempoj);
+
         },
 
         'application/csv': function () {
