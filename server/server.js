@@ -6,6 +6,8 @@ const multer = require('multer');
 
 const fetch = require('fetch').fetchUrl;
 
+var titreArticles = null;
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, __dirname + "/images")
@@ -46,7 +48,8 @@ app.post('/home', upload.single('celebrity'), function(req,res){
                         console.log();
                         var articles = JSON.parse(body.toString()).articles;
                         var titles = articles.map(a => { return a.title;});
-                        console.log(titles);
+                        titreArticles = titles;
+
                         res.json(titles);
                     });
                     },
@@ -74,6 +77,20 @@ app.get('/script', function(req, res){
         res.end()
     })
 });
+
+app.get('/download', function(req,res) {
+    console.log(titreArticles);
+    res.format({
+        'application/json': function () {
+            res.json(titreArticles);
+        },
+
+        'application/csv': function () {
+            res.csv([{name : 'toto'}, {name : 'baptiste'}, {name : 'gabriel'}]);
+        }
+    })
+})
+
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!')

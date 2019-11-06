@@ -8,17 +8,30 @@
 <body>
 
 
-<form id='form' method="post" action="/home" enctype="multipart/form-data">
-    <label for="celebrity">Upload a picture please:</label>
-    <input type="file"
-           id="celebrity" name="celebrity"
-           accept="image/png, image/jpeg">
-    <input type="submit" onclick="loadFile(event)">
-</form>
+    <form id='form' method="post" action="/home" enctype="multipart/form-data">
+        <label for="celebrity">Upload a picture please:</label>
+        <input type="file"
+               id="celebrity" name="celebrity"
+               accept="image/png, image/jpeg">
+        <input type="submit" onclick="loadFile(event)">
+    </form>
 
-<img id="img">
+    <img id="img">
 
-<p id="toto"></p>
+    <p id="toto"></p>
+    <div>
+        <input type="radio" id="csv" name="download" value="csv" checked>
+        <label for="csv">Télécharger en csv</label>
+    </div>
+
+    <div>
+        <input type="radio" id="json" name="download" value="json">
+        <label for="csv">Télécharger en json</label>
+    </div>
+
+    <div>
+        <button onclick="download()"> Envoyer </button>
+    </div>
 </body>
 <script src="/script"></script>
 </html>
