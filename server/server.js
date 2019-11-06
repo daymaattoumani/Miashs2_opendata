@@ -89,7 +89,7 @@ app.get('/news/:celebrity', function(req,res) {
         res.json(news);
     });
 });
-app.get('/index', function(req,res){
+app.get('/', function(req,res){
     fs.readFile("client/index.html", function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.write(data);
@@ -149,7 +149,7 @@ app.get('/download', function(req,res) {
 
 
 app.listen(port, function () {
-    console.log('Example app listening on port 3000!')
+    console.log('Example app listening on port' + port )
 });
 
 
