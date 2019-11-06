@@ -17,3 +17,23 @@ var loadFile = function(event) {
         })
     })
 };
+
+function download() {
+    var input = document.querySelector('input[type="radio"]:checked').value;
+    console.log(input);
+
+    fetch('/download', {
+        method: 'GET',
+        headers: { 'accept' : 'application/'+ input}
+    }).then(function (response) {
+        response.blob().then(function(datablob)
+        {
+            datablob.name = 'newfile.'+ input
+            anchor = document.createElement('a')
+            anchor.download = datablob.name
+            anchor.href = window.URL.createObjectURL(datablob)
+            anchor.dataset.downloadurl = ['application/'+ input, anchor.download, anchor.href].join(':')
+            anchor.click()
+        })
+    })
+}
