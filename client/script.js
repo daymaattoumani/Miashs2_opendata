@@ -14,8 +14,19 @@ var loadFile = function(event) {
     }).then(function (response) {
         response.json().then(function (result) {
             document.getElementById('toto').innerText = result;
-        })
-    })
+
+            fetch('/news/'+ result, {
+                method: 'GET'
+            }).then(function (newsResponse) {
+                newsResponse.json().then(function (news) {
+                    console.log(news);
+                    news.map(function(article){
+                        document.getElementById('toto').innerText += "\ntitre: " + article.title;
+                    })
+                });
+            });
+        });
+    });
 };
 
 function download() {
