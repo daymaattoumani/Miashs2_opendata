@@ -50,7 +50,7 @@ function enableButton() {
 
 function getNews() {
     document.getElementById("yesnoBtn").remove();
-    var html = "<div id='news' class='col m8 l8 s8'>";
+    var html = "<div id='news' class='col m8 l8 s8 left'>";
 
     var prediction =document.getElementById("toto").innerText;
     document.getElementById('toto').innerText = "";
@@ -73,8 +73,8 @@ function getNews() {
                     "<div class='col m9 s9 l9'>" +
                     "      <div class=\"card-stacked\">\n" +
                     "        <div class=\"card-content\">\n" +
-                    "<a target='_blank' href=\""+n.url+"\"><span class=\"card-title\">"+n.title.substring(0,40) + "..."+"</span></a>\n" +
-                    "          <p>"+n.description+"</p>\n" +
+                    "<a target='_blank' href=\""+n.url+"\"><span class=\"card-title\">"+n.title.substring(0,50) + "..."+"</span></a>\n" +
+                    "          <p>"+n.description.substring(0,50)+"..."+"</p>\n" +
                     "        </div>\n" +
                     "      </div>\n" +
                     "</div>" +

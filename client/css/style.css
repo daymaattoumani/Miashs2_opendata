@@ -83,6 +83,9 @@ div.container {
     max-height: 10vh;
 }
 
+.card.horizontal .card-stacked{
+    text-align: left;
+}
 .card.horizontal .card-image {
      max-width: 100%;
 }
