@@ -30,8 +30,12 @@ function loadFile (event) {
             }).then(function (response) {
                 response.json().then(function (result) {
                     preloader.remove();
-                    document.getElementById('toto').innerText = result;
+                    document.getElementById('toto').innerText = result.name;
                     document.getElementById("yesnoBtn").style.visibility = "visible";
+                    var titi = document.getElementById('titi');
+                    titi.src = result.url;
+
+
                 })
             })
         })
@@ -46,17 +50,18 @@ function enableButton() {
 
 function getNews() {
     document.getElementById("yesnoBtn").remove();
+    document.getElementById('toto').innerText = "";
+    var lang = document.getElementById('lang').value;
     var html = "<div id='news' class='col m8 l8 s8'>";
 
     var prediction =document.getElementById("toto").innerText;
-    console.log("prediction",prediction);
     document.getElementById("guessingPart").remove();
     fetch('/news/'+prediction, {
         method: 'GET',
+        headers: {'Accept-Language': lang}
     }).then(function (response) {
         response.json().then(function (news) {
             news.forEach(function(n) {
-                console.log(n);
                 console.log(n.title);
                 html +=
                     "    <div class=\"card horizontal\">\n" +

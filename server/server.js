@@ -6,6 +6,10 @@ const multer = require('multer');
 const fetch = require('fetch').fetchUrl;
 var titreArticles = null;
 
+'use strict';
+const ImageSearchAPIClient = require('azure-cognitiveservices-imagesearch');
+const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, __dirname + "/images")
@@ -43,7 +47,26 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
         predicteur.models.predict("e466caa0619f444ab97497640cefc4dc", {base64: encoded}).then(
             function(response) {
                 let predicted_name = response.outputs[0].data.regions[0].data.concepts[0].name;
-                res.json(predicted_name);
+                //replace this value with your valid subscription key.
+                let serviceKey = "0c10ee92fb0140b58d220bf33f12a68c";
+
+                //instantiate the image search client
+                let credentials = new CognitiveServicesCredentials(serviceKey);
+                let imageSearchApiClient = new ImageSearchAPIClient(credentials);
+
+                //a helper function to perform an async call to the Bing Image Search API
+                const sendQuery = async () => {
+                    return await imageSearchApiClient.imagesOperations.search(predicted_name);
+                };
+
+                sendQuery().then(imageResults => {
+                    if (imageResults == null) {
+                        console.log("No image results were found.");
+                    }
+                    else {
+                        res.json({url: imageResults.value[0].contentUrl, name: predicted_name});
+                    }
+                }).catch(err => console.error(err))
 
             },
             function(err) {
@@ -54,7 +77,10 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
     else throw 'error';
 });
 app.get('/news/:celebrity', function(req,res) {
-    fetch("https://newsapi.org/v2/everything?q=" + req.query.celebrity + "&apiKey=0738b24ebbfa4397b1857b42aea8bd2e", function (error, meta, body) {
+    console.log(JSON.stringify(req.headers));
+    console.log(req.params.celebrity);
+
+    fetch("https://newsapi.org/v2/everything?q=" + req.params.celebrity + "&apiKey=0738b24ebbfa4397b1857b42aea8bd2e", function (error, meta, body) {
         var articles = JSON.parse(body.toString()).articles;
         var news = articles.filter(a => a.urlToImage != null).map(function(a){
             return {title: a.title, image: a.urlToImage, url: a.url};
@@ -63,7 +89,7 @@ app.get('/news/:celebrity', function(req,res) {
         res.json(news);
     });
 });
-app.get('/index', function(req,res){
+app.get('/', function(req,res){
     fs.readFile("client/index.html", function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.write(data);
@@ -118,11 +144,12 @@ app.get('/download', function(req,res) {
             res.csv(tempoc, true);
         }
     })
-})
+});
+
 
 
 app.listen(port, function () {
-    console.log('Example app listening on port 3000!')
+    console.log('Example app listening on port' + port )
 });
 
 

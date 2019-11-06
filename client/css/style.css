@@ -51,6 +51,12 @@ div.container {
     opacity: 0;
 }
 
+#titi {
+    max-width: 30vh;
+}
+
+
+
 #isit {
     opacity: 0.0;
 }
