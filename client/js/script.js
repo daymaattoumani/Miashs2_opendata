@@ -30,8 +30,12 @@ const sleep = (milliseconds) => {
             }).then(function (response) {
                 response.json().then(function (result) {
                     preloader.remove();
-                    document.getElementById('toto').innerText = result;
+                    document.getElementById('toto').innerText = result.name;
                     document.getElementById("yesnoBtn").style.visibility = "visible";
+                    var titi = document.getElementById('titi');
+                    titi.src = result.url;
+
+
                 })
             })
         })
