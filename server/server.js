@@ -12,7 +12,7 @@ const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesC
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "/images")
+        cb(null, __dirname + "/images")
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);
