@@ -12,33 +12,35 @@ nav {
 div.container {
     background-color: whitesmoke;
     border-radius: 10px;
-    padding: 2%;
 }
 
 #formContainer{
     margin-top: 5vh;
+    padding: 2%;
 }
 
 #guessContainer {
     visibility: hidden;
     margin-top: 5vh;
+    max-height: 55vh;
 }
 .btn {
     background-color: cornflowerblue;
 }
 
-.toto {
-    visibility: hidden;
+#toto {
+    opacity: 0;
+    text-transform: capitalize;
 }
 
 #preloader{
-    margin-left: 50%;
-    margin-top: 25%;
+    margin-top: 15vh;
     visibility: hidden;
 }
 
 #isit {
-    margin-top: 10vh;
+    margin-top: 50%;
+    font-family: "Courier New,monospace";
 }
 
 .btn-floating{
@@ -48,17 +50,15 @@ div.container {
 
 #img {
     opacity: 0;
-    width: 100%;
+    max-height: 40vh;
+    max-width: 100%;
+    margin-top: 17%;
 }
 
 #titi {
     max-width: 30vh;
-}
-
-
-
-#isit {
-    opacity: 0.0;
+    max-height: 35vh;
+    opacity: 0;
 }
 
 .row {
@@ -67,10 +67,12 @@ div.container {
 
 #yesnoBtn {
     visibility: hidden;
+    margin-top: 2vh;
 }
 
 #news {
     max-height: 40vh;
+    margin-top: 2vh;
     overflow-y: scroll;
 }
 
@@ -114,4 +116,16 @@ div.container {
     border-radius: 2px 0 0 2px;
     max-width: 100%;
     width: 90%;
+}
+
+/* The typing effect */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: black; }
 }

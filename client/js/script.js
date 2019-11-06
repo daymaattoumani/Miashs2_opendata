@@ -6,7 +6,6 @@ function loadFile (event) {
 
     event.preventDefault();
     var image = document.getElementById('img');
-    var text = document.getElementById('isit');
     var inputFile = document.getElementById('celebrity');
     image.src = URL.createObjectURL(inputFile.files[0]);
     var input = document.querySelector('input[type="file"]');
@@ -17,9 +16,15 @@ function loadFile (event) {
         image.style.setProperty("opacity", "1.0");
         image.style.setProperty("transition", "opacity 0.5s linear");
         sleep(1000).then((step2) => {
-            text.style.setProperty("-webkit-transition", "opacity 0.5s linear");
-            text.style.setProperty("opacity", "1.0");
-            text.style.setProperty("transition", "opacity 0.5s linear");
+            document.getElementById("typewriter").innerHTML +=
+        "<h2 style=\"  overflow: hidden; /* Ensures the content is not revealed until the animation */\n" +
+                "    border-right: .10em solid black; /* The typwriter cursor */\n" +
+                "    margin-top: 50%;\n" +
+                "    white-space: nowrap; /* Keeps the content on a single line */\n" +
+                "    letter-spacing: .20em; /* Adjust as needed */\n" +
+                "    animation:\n" +
+                "            typing 2s steps(13, end),\n" +
+                "            blink-caret .75s step-start infinite;\" id=\"isit\"><i>I think of...</i></h2>";
             preloader.style.visibility = "visible";
             var data = new FormData();
             data.append('celebrity', input.files[0]);
@@ -30,9 +35,16 @@ function loadFile (event) {
             }).then(function (response) {
                 response.json().then(function (result) {
                     preloader.remove();
-                    document.getElementById('toto').innerText = result.name;
+                    var toto = document.getElementById('toto');
+                    toto.style.setProperty("-webkit-transition", "opacity 2s linear");
+                    toto.style.setProperty("opacity", "1.0");
+                    toto.style.setProperty("transition", "opacity 2s linear");
+                    toto.innerText = result.name;
                     document.getElementById("yesnoBtn").style.visibility = "visible";
                     var titi = document.getElementById('titi');
+                    titi.style.setProperty("-webkit-transition", "opacity 2s linear");
+                    titi.style.setProperty("opacity", "1.0");
+                    titi.style.setProperty("transition", "opacity 2s linear");
                     titi.src = result.url;
 
 

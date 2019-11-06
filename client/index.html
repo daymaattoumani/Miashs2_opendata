@@ -41,7 +41,7 @@
 
         <div id="guessingPart">
             <div class="col m4 l4 s12">
-                <h2 id="isit"><i>I think of...</i></h2>
+                <div id="typewriter"></div>
             </div>
             <div class="col m4 l4 s12">
                 <div class="preloader-wrapper big active" id="preloader">
@@ -55,14 +55,16 @@
                     </div>
                     </div>
                 </div>
-                <p id="toto"></p>
+                <h4 id="toto"></h4>
                 <img id="titi">
+                <div id="yesnoBtn">
+                <a class="btn-floating btn-large waves-effect waves-light green pulse" onclick="getNews()"><i class="material-icons">check</i></a>
+                <a class="btn-floating btn-large waves-effect waves-light red pulse"><i class="material-icons">close</i></a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row center" id="yesnoBtn">
-        <a class="btn-floating btn-large waves-effect waves-light green pulse" onclick="getNews()"><i class="material-icons">check</i></a>
-        <a class="btn-floating btn-large waves-effect waves-light red pulse"><i class="material-icons">close</i></a>
+    <div class="row center">
 
         <p>
             <label>
