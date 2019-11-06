@@ -47,8 +47,8 @@ div.container {
 }
 
 #img {
-    max-width: 45vh;
     opacity: 0;
+    width: 100%;
 }
 
 #titi {
@@ -67,4 +67,51 @@ div.container {
 
 #yesnoBtn {
     visibility: hidden;
+}
+
+#news {
+    max-height: 40vh;
+    overflow-y: scroll;
+}
+
+.card .card-content {
+    padding: 10px;
+    border-radius: 0 0 2px 2px;
+}
+
+.card.horizontal {
+    max-height: 10vh;
+}
+
+.card.horizontal .card-stacked{
+    text-align: left;
+}
+.card.horizontal .card-image {
+     max-width: 100%;
+}
+.card .card-image img {
+    display: block;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 10vh;
+}
+
+.card .card-title {
+    font-size: 15px;
+    font-weight: 300;
+    color: #1a0dab;
+}
+
+.card .card-title:hover {
+    text-decoration: underline;
+}
+
+.card.horizontal .card-image img {
+    border-radius: 2px 0 0 2px;
+    max-width: 100%;
+    width: 90%;
 }
