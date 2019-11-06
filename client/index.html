@@ -59,6 +59,20 @@
     <div class="row center" id="yesnoBtn">
             <a class="btn-floating btn-large waves-effect waves-light green pulse"><i class="material-icons">check</i></a>
             <a class="btn-floating btn-large waves-effect waves-light red pulse"><i class="material-icons">close</i></a>
+
+        <div>
+            <input type="radio" id="csv" name="download" value="csv" checked>
+            <label for="csv">Télécharger en csv</label>
+        </div>
+
+        <div>
+            <input type="radio" id="json" name="download" value="json">
+            <label for="csv">Télécharger en json</label>
+        </div>
+
+        <div>
+            <button onclick="download()"> Envoyer </button>
+        </div>
     </div>
 </div>
 <!--JavaScript at end of body for optimized loading-->
