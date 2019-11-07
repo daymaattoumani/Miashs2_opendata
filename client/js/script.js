@@ -15,39 +15,41 @@ function loadFile (event) {
         image.style.setProperty("-webkit-transition", "opacity 0.5s linear");
         image.style.setProperty("opacity", "1.0");
         image.style.setProperty("transition", "opacity 0.5s linear");
-        sleep(1000).then((step2) => {
+        sleep(500).then((step2) => {
             document.getElementById("typewriter").innerHTML +=
-        "<h2 style=\"  overflow: hidden; /* Ensures the content is not revealed until the animation */\n" +
+                "<h3  style=\"  overflow: hidden; /* Ensures the content is not revealed until the animation */\n" +
                 "    border-right: .10em solid black; /* The typwriter cursor */\n" +
                 "    margin-top: 50%;\n" +
                 "    white-space: nowrap; /* Keeps the content on a single line */\n" +
-                "    letter-spacing: .20em; /* Adjust as needed */\n" +
+                "    letter-spacing: 0.12em; /* Adjust as needed */\n" +
                 "    animation:\n" +
-                "            typing 2s steps(13, end),\n" +
-                "            blink-caret .75s step-start infinite;\" id=\"isit\"><i>I think of...</i></h2>";
-            preloader.style.visibility = "visible";
-            var data = new FormData();
-            data.append('celebrity', input.files[0]);
+                "            typing 2s steps(14, end),\n" +
+                "            blink-caret .75s step-start infinite;\" id=\"isit\">I think of...</h3>";
+            sleep(2200).then((step3) => {
+                preloader.style.visibility = "visible";
+                var data = new FormData();
+                data.append('celebrity', input.files[0]);
 
-            fetch('/predict', {
-                method: 'POST',
-                body: data
-            }).then(function (response) {
-                response.json().then(function (result) {
-                    preloader.remove();
-                    var toto = document.getElementById('toto');
-                    toto.style.setProperty("-webkit-transition", "opacity 2s linear");
-                    toto.style.setProperty("opacity", "1.0");
-                    toto.style.setProperty("transition", "opacity 2s linear");
-                    toto.innerText = result.name;
-                    document.getElementById("yesnoBtn").style.visibility = "visible";
-                    var titi = document.getElementById('titi');
-                    titi.style.setProperty("-webkit-transition", "opacity 2s linear");
-                    titi.style.setProperty("opacity", "1.0");
-                    titi.style.setProperty("transition", "opacity 2s linear");
-                    titi.src = result.url;
+                fetch('/predict', {
+                    method: 'POST',
+                    body: data
+                }).then(function (response) {
+                    response.json().then(function (result) {
+                        preloader.remove();
+                        var toto = document.getElementById('toto');
+                        toto.style.setProperty("-webkit-transition", "opacity 2s linear");
+                        toto.style.setProperty("opacity", "1.0");
+                        toto.style.setProperty("transition", "opacity 2s linear");
+                        toto.innerText = result.name;
+                        document.getElementById("yesnoBtn").style.visibility = "visible";
+                        var titi = document.getElementById('titi');
+                        titi.style.setProperty("-webkit-transition", "opacity 2s linear");
+                        titi.style.setProperty("opacity", "1.0");
+                        titi.style.setProperty("transition", "opacity 2s linear");
+                        titi.src = result.url;
 
 
+                    })
                 })
             })
         })
@@ -62,16 +64,28 @@ function enableButton() {
 
 function getNews() {
     document.getElementById("yesnoBtn").remove();
-    var html = "<div id='news' class='col m8 l8 s8 left'>";
-
     var prediction =document.getElementById("toto").innerText;
-    document.getElementById('toto').innerText = "";
-
     document.getElementById("guessingPart").remove();
+    document.getElementById("guessRow").innerHTML+=  "<div id='news' class='col m8 l8 s8 left'></div>";
+    document.getElementById("news").innerHTML=
+        "  <h4>Waiting for "+prediction+" news...</h4> <div class=\"preloader-wrapper big active\" style='margin-top: 10vh'>\n" +
+        "                    <div class=\"spinner-layer spinner-blue-only\">\n" +
+        "                        <div class=\"circle-clipper left\">\n" +
+        "                            <div class=\"circle\"></div>\n" +
+        "                        </div><div class=\"gap-patch\">\n" +
+        "                        <div class=\"circle\"></div>\n" +
+        "                    </div><div class=\"circle-clipper right\">\n" +
+        "                        <div class=\"circle\"></div>\n" +
+        "                    </div>\n" +
+        "                    </div>\n" +
+        "                </div>";
+
+
     fetch('/news/'+prediction, {
         method: 'GET'
     }).then(function (response) {
         response.json().then(function (news) {
+            var html = "";
             news.forEach(function(n) {
                 console.log(n.title);
                 html +=
@@ -93,8 +107,9 @@ function getNews() {
                     "</div>" +
                     "    </div>";
             });
-            html +="</div>";
-            document.getElementById("guessRow").innerHTML += html;
+            sleep(2200).then((step1) => {
+                document.getElementById("news").innerHTML = html;
+            });
         })
     })
 }
