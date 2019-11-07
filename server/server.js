@@ -66,27 +66,31 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
                 var path =  req.file.path;
                 fs.unlink(path, (err) => {
                     if (err) {
-                        console.error(err);
+                        return res.status(500).json({message: "delete doesn't work", error: true});
                     }
                 });
                 sendQuery().then(imageResults => {
                     if (imageResults == null) {
-                        console.log("No image results were found.");
+                        return res.status(404).json({message: "image not found", error: false});
                     }
                     else {
 
-                        res.json({url: imageResults.value[0].contentUrl, name: predicted_name});
+                        return res.status(200).json({url: imageResults.value[0].contentUrl, name: predicted_name});
                     }
-                }).catch(err => console.error(err))
+                }).catch(err => {
+                    console.error(err);
+                });
 
 
             },
             function(err) {
-                console.log(err);
+                return res.status(500).json({message: err, error: true});
             }
         );
+    }else{
+        return res.status(400).json({message: "Bad Request: file not found", error: false});
+
     }
-    else throw 'error';
 });
 
 app.get('/image/:celebrity',  function (req,res) {
@@ -102,32 +106,34 @@ app.get('/image/:celebrity',  function (req,res) {
     };
     sendQuery().then(imageResults => {
         if (imageResults == null) {
-            console.log("No image results were found.");
+            return res.status(404).json({message: "image not found", error: false});
         }
         else {
-
-            res.json({url: imageResults.value[0].contentUrl, name: predicted_name});
+            res.status(200).json({url: imageResults.value[0].contentUrl, name: predicted_name});
         }
-    }).catch(err => console.error(err))
+    }).catch(err => res.status(500).json({message: err, error: true}))
 });
 
 app.get('/output/:nb_predict',  function (req,res) {
     if (req.params.nb_predict == 1) {
-        res.json({'name':predicted_name2});
+        res.status(200).json({'name':predicted_name2});
     }else {
-        res.json({'name':predicted_name3});
+        res.status(200).json({'name':predicted_name3});
     }
 
 });
 
 app.get('/news/:celebrity', function(req,res) {
     fetch("https://newsapi.org/v2/everything?q=" + req.params.celebrity + "&apiKey=0738b24ebbfa4397b1857b42aea8bd2e", function (error, meta, body) {
+        if(error){
+            return res.status(500).json({message:error, error: true});
+        }
         var articles = JSON.parse(body.toString()).articles;
         var news = articles.filter(a => a.urlToImage != null && a.description != null).map(function(a){
             return {title: a.title, image: a.urlToImage, url: a.url, description: a.description};
         });
         titreArticles = news;
-        res.json(news);
+        res.status(200).json(news);
     });
 });
 app.get('/', function(req,res){
@@ -173,7 +179,7 @@ app.get('/download', function(req,res) {
     res.format({
         'application/json': function () {
 
-            res.json(titreArticles);
+            res.status(200).json(titreArticles);
 
         },
 
