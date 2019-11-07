@@ -153,18 +153,7 @@ function getNewPred() {
         var titi = document.getElementById('titi');
         titi.style.opacity = 0;
         toto.style.opacity =0;
-        /*document.getElementById("resultPart").innerHTML +=
-            "  <div id='preloaderNewPred' class=\"preloader-wrapper big active\" style='margin-top: 10vh'>\n" +
-            "                    <div class=\"spinner-layer spinner-blue-only\">\n" +
-            "                        <div class=\"circle-clipper left\">\n" +
-            "                            <div class=\"circle\"></div>\n" +
-            "                        </div><div class=\"gap-patch\">\n" +
-            "                        <div class=\"circle\"></div>\n" +
-            "                    </div><div class=\"circle-clipper right\">\n" +
-            "                        <div class=\"circle\"></div>\n" +
-            "                    </div>\n" +
-            "                    </div>\n" +
-            "                </div>";*/
+
         fetch('/output/' + nbpred).then(response => {
             response.json().then(output => {
                 var prediction = output.name;
@@ -173,12 +162,11 @@ function getNewPred() {
                     method: 'GET'
                 }).then(function (res) {
                     res.json().then(function (result) {
-                        console.log(result.name,result.url);
-                        sleep(1500).then( (step) => {
-                            console.log(result.name,result.url);
-                            //document.getElementById("preloaderNewPred").remove();
+                        sleep(1800).then( (step) => {
                             toto.innerHTML = result.name;
                             titi.src = result.url;
+                            console.log(result.name,result.url);
+                            //document.getElementById("preloaderNewPred").remove();
                             titi.style.opacity = 1;
                             toto.style.opacity =1;
                             document.getElementById("yesnoBtn").style.visibility = "visible";
