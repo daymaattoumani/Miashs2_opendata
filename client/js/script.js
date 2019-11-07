@@ -153,7 +153,24 @@ function getNewPred() {
         var titi = document.getElementById('titi');
         titi.style.opacity = 0;
         toto.style.opacity =0;
-
+        var typewriter = "";
+        if(nbpred === 1) {
+            typewriter = "or maybe...";
+            document.getElementById("typewriter").style.width = "69%";
+        }
+        if(nbpred === 2) {
+            typewriter = "last try...";
+            document.getElementById("typewriter").style.width = "63%";
+        }
+        document.getElementById("typewriter").innerHTML =
+            "<h3  style=\"  overflow: hidden; /* Ensures the content is not revealed until the animation */\n" +
+            "    border-right: .10em solid black; /* The typwriter cursor */\n" +
+            "    margin-top: 50%;\n" +
+            "    white-space: nowrap; /* Keeps the content on a single line */\n" +
+            "    letter-spacing: 0.12em; /* Adjust as needed */\n" +
+            "    animation:\n" +
+            "            typing 2s steps(12, end),\n" +
+            "            blink-caret .75s step-start infinite;\" id=\"isit\">"+typewriter+"</h3>";
         fetch('/output/' + nbpred).then(response => {
             response.json().then(output => {
                 var prediction = output.name;
@@ -162,7 +179,7 @@ function getNewPred() {
                     method: 'GET'
                 }).then(function (res) {
                     res.json().then(function (result) {
-                        sleep(1800).then( (step) => {
+                        sleep(2000).then( (step) => {
                             toto.innerHTML = result.name;
                             titi.src = result.url;
                             console.log(result.name,result.url);
