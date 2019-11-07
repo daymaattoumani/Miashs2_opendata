@@ -59,12 +59,18 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
                 const sendQuery = async () => {
                     return await imageSearchApiClient.imagesOperations.search(predicted_name);
                 };
-
+                var path =  req.file.path;
+                fs.unlink(path, (err) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                });
                 sendQuery().then(imageResults => {
                     if (imageResults == null) {
                         console.log("No image results were found.");
                     }
                     else {
+
                         res.json({url: imageResults.value[0].contentUrl, name: predicted_name});
                     }
                 }).catch(err => console.error(err))
