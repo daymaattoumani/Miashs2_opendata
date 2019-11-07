@@ -99,6 +99,15 @@ function getNews() {
     })
 }
 
+function getNewPred() {
+    var nb_pred=1;
+    fetch('/output/'+nb_pred).then(response =>{
+        response.json().then(output =>{
+            console.log(output.name);
+        })
+    })
+}
+
 function download() {
     var input = document.querySelector('input[type="radio"]:checked').value;
     console.log(input);
