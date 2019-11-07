@@ -111,12 +111,12 @@ function download() {
     }).then(function (response) {
         response.blob().then(function(datablob)
         {
-            datablob.name = 'newfile.'+ input
-            anchor = document.createElement('a')
-            anchor.download = datablob.name
-            anchor.href = window.URL.createObjectURL(datablob)
-            anchor.dataset.downloadurl = ['application/'+ input, anchor.download, anchor.href].join(':')
-            anchor.click()
+            datablob.name = 'newfile.'+ input;
+            anchor = document.createElement('a');
+            anchor.download = datablob.name;
+            anchor.href = window.URL.createObjectURL(datablob);
+            anchor.dataset.downloadurl = ['application/'+ input, anchor.download, anchor.href].join(':');
+            anchor.click();
         })
     })
 }

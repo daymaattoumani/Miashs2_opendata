@@ -4,6 +4,8 @@ const Clarifai = require('clarifai');
 const fs = require('fs');
 const multer = require('multer');
 const fetch = require('fetch').fetchUrl;
+const json2csv = require('json2csv').parse;
+
 var titreArticles = null;
 
 'use strict';
@@ -23,7 +25,6 @@ var upload = multer({ storage: storage });
 
 // The JavaScript client works in both Node.js and the browser.
 var express = require('express');
-var csv = require('csv-express')/* npm install csv-express*/
 var bodyParser = require("body-parser");
 var app = express();
 app.use(express.static('server'));
@@ -98,7 +99,7 @@ app.get('/script', function(req, res){
     fs.readFile("client/js/script.js", function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/javascript'});
         res.write(data);
-        res.end()
+        res.end();
     })
 });
 
@@ -106,7 +107,7 @@ app.get('/materialize.min.css', function(req, res){
     fs.readFile("client/css/materialize.min.css", function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/css'});
         res.write(data);
-        res.end()
+        res.end();
     })
 });
 
@@ -122,23 +123,22 @@ app.get('/materialize.min.js', function(req, res){
     fs.readFile("client/js/materialize.min.js", function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/js'});
         res.write(data);
-        res.end()
+        res.end();
     })
 });
-
 app.get('/download', function(req,res) {
-
     res.format({
         'application/json': function () {
-            var tempoj = titreArticles;
 
-            res.json(tempoj);
+            res.json(titreArticles);
 
         },
 
         'application/csv': function () {
-            var tempoc = titreArticles;
-            res.csv(tempoc, true);
+            const csvString = json2csv(titreArticles);
+            res.set('Content-Type', 'text/csv');
+            res.status(200).send(csvString);
+
         }
     })
 });
