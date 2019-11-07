@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 var nbpred = 0;
 function loadFile (event) {
-
+    nbpred = 0;
+    document.getElementById("submitBtn").classList.replace("enabled","disabled");
     document.getElementById("guessRow").innerHTML =
         " <div id=\"imgSent\"class=\"col m4 l4 s12\">\n" +
         "            <img id=\"img\">\n" +
@@ -53,9 +54,9 @@ function loadFile (event) {
                 "    border-right: .10em solid black; /* The typwriter cursor */\n" +
                 "    margin-top: 50%;\n" +
                 "    white-space: nowrap; /* Keeps the content on a single line */\n" +
-                "    letter-spacing: 0.12em; /* Adjust as needed */\n" +
+                "    letter-spacing: 0.10em; /* Adjust as needed */\n" +
                 "    animation:\n" +
-                "            typing 2s steps(14, end),\n" +
+                "            typing 1.5s steps(14, end),\n" +
                 "            blink-caret .75s step-start infinite;\" id=\"isit\">I think of...</h3>";
             sleep(2200).then((step3) => {
                 preloader.style.visibility = "visible";
@@ -69,15 +70,15 @@ function loadFile (event) {
                     response.json().then(function (result) {
                         preloader.remove();
                         var toto = document.getElementById('toto');
-                        toto.style.setProperty("-webkit-transition", "opacity 2s linear");
+                        toto.style.setProperty("-webkit-transition", "opacity 1s linear");
                         toto.style.setProperty("opacity", "1.0");
-                        toto.style.setProperty("transition", "opacity 2s linear");
+                        toto.style.setProperty("transition", "opacity 1s linear");
                         toto.innerText = result.name;
                         document.getElementById("yesnoBtn").style.visibility = "visible";
                         var titi = document.getElementById('titi');
-                        titi.style.setProperty("-webkit-transition", "opacity 2s linear");
+                        titi.style.setProperty("-webkit-transition", "opacity 1s linear");
                         titi.style.setProperty("opacity", "1.0");
-                        titi.style.setProperty("transition", "opacity 2s linear");
+                        titi.style.setProperty("transition", "opacity 1s linear");
                         titi.src = result.url;
 
 
@@ -191,23 +192,25 @@ function getNewPred() {
         var titi = document.getElementById('titi');
         titi.style.opacity = 0;
         toto.style.opacity =0;
+        document.getElementById("yesnoBtn").style.visibility = "hidden";
         var typewriter = "";
         if(nbpred === 1) {
             typewriter = "or maybe...";
-            document.getElementById("typewriter").style.width = "69%";
-        }
-        if(nbpred === 2) {
+            document.getElementById("typewriter").style.width = "29.5vh";
+        }else {
             typewriter = "last try...";
-            document.getElementById("typewriter").style.width = "63%";
+            document.getElementById("typewriter").style.width = "23.5vh";
         }
+
+
         document.getElementById("typewriter").innerHTML =
             "<h3  style=\"  overflow: hidden; /* Ensures the content is not revealed until the animation */\n" +
             "    border-right: .10em solid black; /* The typwriter cursor */\n" +
             "    margin-top: 50%;\n" +
             "    white-space: nowrap; /* Keeps the content on a single line */\n" +
-            "    letter-spacing: 0.12em; /* Adjust as needed */\n" +
+            "    letter-spacing: 0.10em; /* Adjust as needed */\n" +
             "    animation:\n" +
-            "            typing 2s steps(12, end),\n" +
+            "            typing 1.5s steps("+(typewriter.length +1)+", end),\n" +
             "            blink-caret .75s step-start infinite;\" id=\"isit\">"+typewriter+"</h3>";
         fetch('/output/' + nbpred).then(response => {
             response.json().then(output => {
@@ -221,7 +224,6 @@ function getNewPred() {
                             toto.innerHTML = result.name;
                             titi.src = result.url;
                             console.log(result.name,result.url);
-                            //document.getElementById("preloaderNewPred").remove();
                             titi.style.opacity = 1;
                             toto.style.opacity =1;
                             document.getElementById("yesnoBtn").style.visibility = "visible";

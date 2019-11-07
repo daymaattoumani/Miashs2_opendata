@@ -53,6 +53,8 @@ div.container {
     max-height: 40vh;
     max-width: 100%;
     margin-top: 8vh;
+    border: solid 3px grey;
+    border-radius: 10px;
 }
 
 #titi {
@@ -125,7 +127,7 @@ div.container {
 }
 
 #typewriter {
-    width: 72%;
+    width: 30.5vh;
     margin: 50% auto;
 }
 
