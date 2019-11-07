@@ -8,6 +8,34 @@ document.addEventListener('DOMContentLoaded', function() {
 var nbpred = 0;
 function loadFile (event) {
 
+    document.getElementById("guessRow").innerHTML =
+        " <div id=\"imgSent\"class=\"col m4 l4 s12\">\n" +
+        "            <img id=\"img\">\n" +
+        "        </div>\n" +
+        "\n" +
+        "        <div id=\"guessingPart\">\n" +
+        "            <div class=\"col m4 l4 s12\">\n" +
+        "                <div id=\"typewriter\"></div>\n" +
+        "            </div>\n" +
+        "            <div id=\"resultPart\" class=\"col m4 l4 s12\">\n" +
+        "                <div class=\"preloader-wrapper big active\" id=\"preloader\">\n" +
+        "                    <div class=\"spinner-layer spinner-blue-only\">\n" +
+        "                        <div class=\"circle-clipper left\">\n" +
+        "                            <div class=\"circle\"></div>\n" +
+        "                        </div><div class=\"gap-patch\">\n" +
+        "                        <div class=\"circle\"></div>\n" +
+        "                    </div><div class=\"circle-clipper right\">\n" +
+        "                        <div class=\"circle\"></div>\n" +
+        "                    </div>\n" +
+        "                    </div>\n" +
+        "                </div>\n" +
+        "                <h4 id=\"toto\"></h4>\n" +
+        "                <img id=\"titi\">\n" +
+        "                <div id=\"yesnoBtn\">\n" +
+        "                    <a class=\"btn-floating btn-large waves-effect waves-light green pulse\" onclick=\"getNews()\"><i class=\"material-icons\">check</i></a>\n" +
+        "                    <a class=\"btn-floating btn-large waves-effect waves-light red pulse\" id=\"no\" onclick=\"getNewPred()\"><i class=\"material-icons\">close</i></a>\n" +
+        "                </div>\n" +
+        "            </div>";
     event.preventDefault();
     var image = document.getElementById('img');
     var inputFile = document.getElementById('celebrity');
