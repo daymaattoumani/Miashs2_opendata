@@ -1,7 +1,10 @@
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 };
-
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    M.Modal.init(elems);
+});
 var nbpred = 0;
 function loadFile (event) {
 
@@ -63,9 +66,16 @@ function enableButton() {
     submitBtn.classList.replace("disabled","enabled");
 }
 
-function getNews() {
+function getNews(predSentFromInput=null) {
     document.getElementById("yesnoBtn").remove();
-    var prediction =document.getElementById("toto").innerText;
+    var prediction = "";
+    if (predSentFromInput === null) {
+        prediction = document.getElementById("toto").innerText;
+    } else {
+        console.log("TRUE"),
+        prediction = predSentFromInput
+        console.log(prediction);
+    }
     document.getElementById("guessingPart").remove();
     document.getElementById("guessRow").innerHTML+=  "<div id='news' class='col m8 l8 s8 left'></div>";
     document.getElementById("news").innerHTML=
@@ -192,6 +202,10 @@ function getNewPred() {
                 })
             })
         })
+    }else {
+        var noBtn = document.getElementById("no");
+        noBtn.classList.add("modal-trigger");
+        noBtn.setAttribute("data-target","modal1");
     }
 }
 
@@ -214,4 +228,10 @@ function download() {
             anchor.click();
         })
     })
+}
+
+function enableSubmitCeleb() {
+    var submitBtn = document.getElementById("submitCeleb");
+    submitBtn.classList.replace("disabled","enabled");
+
 }
