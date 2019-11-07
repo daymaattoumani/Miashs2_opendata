@@ -120,8 +120,13 @@ div.container {
 
 /* The typing effect */
 @keyframes typing {
-    from { width: 0 }
+    from { width: 0% }
     to { width: 100% }
+}
+
+#typewriter {
+    width: 72%;
+    margin: 50% auto;
 }
 
 /* The typewriter cursor effect */

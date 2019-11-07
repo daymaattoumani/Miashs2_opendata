@@ -17,14 +17,14 @@ function loadFile (event) {
         image.style.setProperty("transition", "opacity 0.5s linear");
         sleep(500).then((step2) => {
             document.getElementById("typewriter").innerHTML +=
-                "<h3 style=\"  overflow: hidden; /* Ensures the content is not revealed until the animation */\n" +
+                "<h3  style=\"  overflow: hidden; /* Ensures the content is not revealed until the animation */\n" +
                 "    border-right: .10em solid black; /* The typwriter cursor */\n" +
                 "    margin-top: 50%;\n" +
                 "    white-space: nowrap; /* Keeps the content on a single line */\n" +
-                "    letter-spacing: .32em; /* Adjust as needed */\n" +
+                "    letter-spacing: 0.12em; /* Adjust as needed */\n" +
                 "    animation:\n" +
-                "            typing 2s steps(13, end),\n" +
-                "            blink-caret .75s step-start infinite;\" id=\"isit\"><i>I think of...</i></h3>";
+                "            typing 2s steps(14, end),\n" +
+                "            blink-caret .75s step-start infinite;\" id=\"isit\">I think of...</h3>";
             sleep(2200).then((step3) => {
                 preloader.style.visibility = "visible";
                 var data = new FormData();
