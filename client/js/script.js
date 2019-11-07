@@ -2,6 +2,7 @@ const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 };
 
+var nbpred = 0;
 function loadFile (event) {
 
     event.preventDefault();
@@ -145,12 +146,48 @@ function getNews() {
 }
 
 function getNewPred() {
-    var nb_pred=1;
-    fetch('/output/'+nb_pred).then(response =>{
-        response.json().then(output =>{
-            console.log(output.name);
+    nbpred++;
+    if (nbpred < 3) {
+        console.log("nbpred",nbpred);
+        var toto = document.getElementById('toto');
+        var titi = document.getElementById('titi');
+        titi.style.opacity = 0;
+        toto.style.opacity =0;
+        /*document.getElementById("resultPart").innerHTML +=
+            "  <div id='preloaderNewPred' class=\"preloader-wrapper big active\" style='margin-top: 10vh'>\n" +
+            "                    <div class=\"spinner-layer spinner-blue-only\">\n" +
+            "                        <div class=\"circle-clipper left\">\n" +
+            "                            <div class=\"circle\"></div>\n" +
+            "                        </div><div class=\"gap-patch\">\n" +
+            "                        <div class=\"circle\"></div>\n" +
+            "                    </div><div class=\"circle-clipper right\">\n" +
+            "                        <div class=\"circle\"></div>\n" +
+            "                    </div>\n" +
+            "                    </div>\n" +
+            "                </div>";*/
+        fetch('/output/' + nbpred).then(response => {
+            response.json().then(output => {
+                var prediction = output.name;
+                console.log(nbpred,prediction);
+                fetch('/image/' + prediction, {
+                    method: 'GET'
+                }).then(function (res) {
+                    res.json().then(function (result) {
+                        console.log(result.name,result.url);
+                        sleep(1500).then( (step) => {
+                            console.log(result.name,result.url);
+                            //document.getElementById("preloaderNewPred").remove();
+                            toto.innerHTML = result.name;
+                            titi.src = result.url;
+                            titi.style.opacity = 1;
+                            toto.style.opacity =1;
+                            document.getElementById("yesnoBtn").style.visibility = "visible";
+                        })
+                    })
+                })
+            })
         })
-    })
+    }
 }
 
 function download() {

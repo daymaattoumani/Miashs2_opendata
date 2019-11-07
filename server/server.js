@@ -89,6 +89,28 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
     else throw 'error';
 });
 
+app.get('/image/:celebrity',  function (req,res) {
+    let serviceKey = "0c10ee92fb0140b58d220bf33f12a68c";
+    let predicted_name = req.params.celebrity;
+    //instantiate the image search client
+    let credentials = new CognitiveServicesCredentials(serviceKey);
+    let imageSearchApiClient = new ImageSearchAPIClient(credentials);
+
+    //a helper function to perform an async call to the Bing Image Search API
+    const sendQuery = async () => {
+        return await imageSearchApiClient.imagesOperations.search(predicted_name);
+    };
+    sendQuery().then(imageResults => {
+        if (imageResults == null) {
+            console.log("No image results were found.");
+        }
+        else {
+
+            res.json({url: imageResults.value[0].contentUrl, name: predicted_name});
+        }
+    }).catch(err => console.error(err))
+});
+
 app.get('/output/:nb_predict',  function (req,res) {
     if (req.params.nb_predict == 1) {
         res.json({'name':predicted_name2});
