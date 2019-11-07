@@ -22,7 +22,7 @@ div.container {
 #guessContainer {
     visibility: hidden;
     margin-top: 5vh;
-    max-height: 55vh;
+    height: 55vh;
 }
 .btn {
     background-color: cornflowerblue;
@@ -71,7 +71,7 @@ div.container {
 }
 
 #news {
-    max-height: 40vh;
+    height: 48vh;
     margin-top: 2vh;
     overflow-y: scroll;
 }

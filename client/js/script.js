@@ -79,6 +79,9 @@ function getNews() {
         "                    </div>\n" +
         "                    </div>\n" +
         "                </div>";
+    var image = document.getElementById('img');
+    image.style.setProperty("-webkit-transition", "max-height 2s");
+    image.style.setProperty("transition", "max-height 2s");
 
 
     fetch('/news/'+prediction, {
@@ -109,12 +112,40 @@ function getNews() {
             });
             sleep(2200).then((step1) => {
                 document.getElementById("news").innerHTML = html;
+                image.style.setProperty("max-height", "25vh");
+                sleep(2000).then((step2) => {
+                    document.getElementById('imgSent').innerHTML +=
+                        "  <div class=\"row center\">\n" +
+                        "<div class='col m6 l6 s12'>"+
+                        "\n" +
+                        "        <p>\n" +
+                        "            <label>\n" +
+                        "                <input class=\"with-gap\" id=\"csv\" value=\"csv\" name=\"download\" type=\"radio\" checked />\n" +
+                        "                <span>CSV</span>\n" +
+                        "            </label>\n" +
+                        "        </p>\n" +
+                        "</div>" +
+                        "<div class='col m6 l6 s12'>"+
+                        "        <p>\n" +
+                        "            <label>\n" +
+                        "                <input class=\"with-gap\" id=\"json\" value=\"json\" name=\"download\" type=\"radio\" />\n" +
+                        "                <span>JSON</span>\n" +
+                        "            </label>\n" +
+                        "        </p>\n" +
+                        "\n" +
+                        "</div>" +
+                        "<a id='dl' class=\"waves-effect waves-light btn green\"><i class=\"material-icons right\">file_download</i>Download news</a>\n" +
+                        "</div>"
+                    "    </div>";
+                    document.getElementById("dl").addEventListener('click',download);
+                });
             });
         })
     })
 }
 
 function download() {
+    console.log("download");
     var input = document.querySelector('input[type="radio"]:checked').value;
     console.log(input);
 
