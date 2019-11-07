@@ -34,7 +34,7 @@ div.container {
 }
 
 #preloader{
-    margin-top: 15vh;
+    margin-top: 20vh;
     visibility: hidden;
 }
 
@@ -52,7 +52,7 @@ div.container {
     opacity: 0;
     max-height: 40vh;
     max-width: 100%;
-    margin-top: 17%;
+    margin-top: 8vh;
 }
 
 #titi {
