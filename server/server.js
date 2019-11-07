@@ -5,6 +5,8 @@ const fs = require('fs');
 const multer = require('multer');
 const fetch = require('fetch').fetchUrl;
 const json2csv = require('json2csv').parse;
+const cors = require('cors');
+
 
 var titreArticles = null;
 var predicted_name2 = null;
@@ -33,7 +35,7 @@ app.use(express.static('server'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
+app.use(cors());
 function base64_encode(file) {
     // read binary data
     var bitmap = fs.readFileSync(file);
