@@ -35,7 +35,7 @@ app.use(express.static('server'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(cors())
+app.use(cors());
 function base64_encode(file) {
     // read binary data
     var bitmap = fs.readFileSync(file);

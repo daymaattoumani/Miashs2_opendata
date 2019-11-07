@@ -35,34 +35,24 @@
 
 <div class="container" id="guessContainer">
     <div class="row center" id="guessRow">
-        <div id="imgSent"class="col m4 l4 s12">
-            <img id="img">
+
+        </div>
+    </div>
+</div>
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Alright, you won...</h4>
+        <p>Could you please tell me who is this celebrity ? I can still give you some news about her.</p>
+        <div class="row center">
+            <div class="input-field col s6">
+                <input onchange="enableSubmitCeleb()" id="celebrityName" type="text" class="validate">
+                <label for="celebrityName">Celebrity name</label>
+            </div>
+        </div>
+        <div class="center">
+        <a  id="submitCeleb" onclick="getNews(document.getElementById('celebrityName').value)" class="disabled waves-effect waves-light btn modal-close">Send</a>
         </div>
 
-        <div id="guessingPart">
-            <div class="col m4 l4 s12">
-                <div id="typewriter"></div>
-            </div>
-            <div id="resultPart" class="col m4 l4 s12">
-                <div class="preloader-wrapper big active" id="preloader">
-                    <div class="spinner-layer spinner-blue-only">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div><div class="gap-patch">
-                        <div class="circle"></div>
-                    </div><div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                    </div>
-                </div>
-                <h4 id="toto"></h4>
-                <img id="titi">
-                <div id="yesnoBtn">
-                <a class="btn-floating btn-large waves-effect waves-light green pulse" onclick="getNews()"><i class="material-icons">check</i></a>
-                <a class="btn-floating btn-large waves-effect waves-light red pulse" onclick="getNewPred()"><i class="material-icons">close</i></a>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <!--JavaScript at end of body for optimized loading-->

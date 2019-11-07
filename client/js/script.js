@@ -1,10 +1,42 @@
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 };
-
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    M.Modal.init(elems);
+});
 var nbpred = 0;
 function loadFile (event) {
-
+    nbpred = 0;
+    document.getElementById("submitBtn").classList.replace("enabled","disabled");
+    document.getElementById("guessRow").innerHTML =
+        " <div id=\"imgSent\"class=\"col m4 l4 s12\">\n" +
+        "            <img id=\"img\">\n" +
+        "        </div>\n" +
+        "\n" +
+        "        <div id=\"guessingPart\">\n" +
+        "            <div class=\"col m4 l4 s12\">\n" +
+        "                <div id=\"typewriter\"></div>\n" +
+        "            </div>\n" +
+        "            <div id=\"resultPart\" class=\"col m4 l4 s12\">\n" +
+        "                <div class=\"preloader-wrapper big active\" id=\"preloader\">\n" +
+        "                    <div class=\"spinner-layer spinner-blue-only\">\n" +
+        "                        <div class=\"circle-clipper left\">\n" +
+        "                            <div class=\"circle\"></div>\n" +
+        "                        </div><div class=\"gap-patch\">\n" +
+        "                        <div class=\"circle\"></div>\n" +
+        "                    </div><div class=\"circle-clipper right\">\n" +
+        "                        <div class=\"circle\"></div>\n" +
+        "                    </div>\n" +
+        "                    </div>\n" +
+        "                </div>\n" +
+        "                <h4 id=\"toto\"></h4>\n" +
+        "                <img id=\"titi\">\n" +
+        "                <div id=\"yesnoBtn\">\n" +
+        "                    <a class=\"btn-floating btn-large waves-effect waves-light green pulse\" onclick=\"getNews()\"><i class=\"material-icons\">check</i></a>\n" +
+        "                    <a class=\"btn-floating btn-large waves-effect waves-light red pulse\" id=\"no\" onclick=\"getNewPred()\"><i class=\"material-icons\">close</i></a>\n" +
+        "                </div>\n" +
+        "            </div>";
     event.preventDefault();
     var image = document.getElementById('img');
     var inputFile = document.getElementById('celebrity');
@@ -22,9 +54,9 @@ function loadFile (event) {
                 "    border-right: .10em solid black; /* The typwriter cursor */\n" +
                 "    margin-top: 50%;\n" +
                 "    white-space: nowrap; /* Keeps the content on a single line */\n" +
-                "    letter-spacing: 0.12em; /* Adjust as needed */\n" +
+                "    letter-spacing: 0.10em; /* Adjust as needed */\n" +
                 "    animation:\n" +
-                "            typing 2s steps(14, end),\n" +
+                "            typing 1.5s steps(14, end),\n" +
                 "            blink-caret .75s step-start infinite;\" id=\"isit\">I think of...</h3>";
             sleep(2200).then((step3) => {
                 preloader.style.visibility = "visible";
@@ -38,15 +70,15 @@ function loadFile (event) {
                     response.json().then(function (result) {
                         preloader.remove();
                         var toto = document.getElementById('toto');
-                        toto.style.setProperty("-webkit-transition", "opacity 2s linear");
+                        toto.style.setProperty("-webkit-transition", "opacity 1s linear");
                         toto.style.setProperty("opacity", "1.0");
-                        toto.style.setProperty("transition", "opacity 2s linear");
+                        toto.style.setProperty("transition", "opacity 1s linear");
                         toto.innerText = result.name;
                         document.getElementById("yesnoBtn").style.visibility = "visible";
                         var titi = document.getElementById('titi');
-                        titi.style.setProperty("-webkit-transition", "opacity 2s linear");
+                        titi.style.setProperty("-webkit-transition", "opacity 1s linear");
                         titi.style.setProperty("opacity", "1.0");
-                        titi.style.setProperty("transition", "opacity 2s linear");
+                        titi.style.setProperty("transition", "opacity 1s linear");
                         titi.src = result.url;
 
 
@@ -63,9 +95,16 @@ function enableButton() {
     submitBtn.classList.replace("disabled","enabled");
 }
 
-function getNews() {
+function getNews(predSentFromInput=null) {
     document.getElementById("yesnoBtn").remove();
-    var prediction =document.getElementById("toto").innerText;
+    var prediction = "";
+    if (predSentFromInput === null) {
+        prediction = document.getElementById("toto").innerText;
+    } else {
+        console.log("TRUE"),
+        prediction = predSentFromInput
+        console.log(prediction);
+    }
     document.getElementById("guessingPart").remove();
     document.getElementById("guessRow").innerHTML+=  "<div id='news' class='col m8 l8 s8 left'></div>";
     document.getElementById("news").innerHTML=
@@ -153,23 +192,25 @@ function getNewPred() {
         var titi = document.getElementById('titi');
         titi.style.opacity = 0;
         toto.style.opacity =0;
+        document.getElementById("yesnoBtn").style.visibility = "hidden";
         var typewriter = "";
         if(nbpred === 1) {
             typewriter = "or maybe...";
-            document.getElementById("typewriter").style.width = "69%";
-        }
-        if(nbpred === 2) {
+            document.getElementById("typewriter").style.width = "29.5vh";
+        }else {
             typewriter = "last try...";
-            document.getElementById("typewriter").style.width = "63%";
+            document.getElementById("typewriter").style.width = "23.5vh";
         }
+
+
         document.getElementById("typewriter").innerHTML =
             "<h3  style=\"  overflow: hidden; /* Ensures the content is not revealed until the animation */\n" +
             "    border-right: .10em solid black; /* The typwriter cursor */\n" +
             "    margin-top: 50%;\n" +
             "    white-space: nowrap; /* Keeps the content on a single line */\n" +
-            "    letter-spacing: 0.12em; /* Adjust as needed */\n" +
+            "    letter-spacing: 0.10em; /* Adjust as needed */\n" +
             "    animation:\n" +
-            "            typing 2s steps(12, end),\n" +
+            "            typing 1.5s steps("+(typewriter.length +1)+", end),\n" +
             "            blink-caret .75s step-start infinite;\" id=\"isit\">"+typewriter+"</h3>";
         fetch('/output/' + nbpred).then(response => {
             response.json().then(output => {
@@ -183,7 +224,6 @@ function getNewPred() {
                             toto.innerHTML = result.name;
                             titi.src = result.url;
                             console.log(result.name,result.url);
-                            //document.getElementById("preloaderNewPred").remove();
                             titi.style.opacity = 1;
                             toto.style.opacity =1;
                             document.getElementById("yesnoBtn").style.visibility = "visible";
@@ -192,6 +232,10 @@ function getNewPred() {
                 })
             })
         })
+    }else {
+        var noBtn = document.getElementById("no");
+        noBtn.classList.add("modal-trigger");
+        noBtn.setAttribute("data-target","modal1");
     }
 }
 
@@ -214,4 +258,10 @@ function download() {
             anchor.click();
         })
     })
+}
+
+function enableSubmitCeleb() {
+    var submitBtn = document.getElementById("submitCeleb");
+    submitBtn.classList.replace("disabled","enabled");
+
 }
