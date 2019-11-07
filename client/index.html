@@ -22,7 +22,7 @@
                 <input onchange="enableButton()" accept="image/png, image/jpeg" id="celebrity" name="celebrity" type="file">
             </div>
             <div class="file-path-wrapper">
-                <input class="file-path validate"placeholder="Upload your celebrity picture"  type="text">
+                <input class="file-path validate" placeholder="Upload your celebrity picture"  type="text">
             </div>
         </div>
         <div class="center">
@@ -43,7 +43,7 @@
             <div class="col m4 l4 s12">
                 <div id="typewriter"></div>
             </div>
-            <div class="col m4 l4 s12">
+            <div id="resultPart" class="col m4 l4 s12">
                 <div class="preloader-wrapper big active" id="preloader">
                     <div class="spinner-layer spinner-blue-only">
                         <div class="circle-clipper left">
@@ -59,7 +59,7 @@
                 <img id="titi">
                 <div id="yesnoBtn">
                 <a class="btn-floating btn-large waves-effect waves-light green pulse" onclick="getNews()"><i class="material-icons">check</i></a>
-                <a class="btn-floating btn-large waves-effect waves-light red pulse"><i class="material-icons">close</i></a>
+                <a class="btn-floating btn-large waves-effect waves-light red pulse" onclick="getNewPred()"><i class="material-icons">close</i></a>
                 </div>
             </div>
         </div>
