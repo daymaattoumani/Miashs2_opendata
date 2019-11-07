@@ -11,7 +11,7 @@ function loadFile (event) {
     document.getElementById("submitBtn").classList.replace("enabled","disabled");
     document.getElementById("guessRow").innerHTML =
         " <div id=\"imgSent\"class=\"col m4 l4 s12\">\n" +
-        "            <img id=\"img\">\n" +
+        "            <img class='scale-transition scale-out' id=\"img\">\n" +
         "        </div>\n" +
         "\n" +
         "        <div id=\"guessingPart\">\n" +
@@ -30,9 +30,9 @@ function loadFile (event) {
         "                    </div>\n" +
         "                    </div>\n" +
         "                </div>\n" +
-        "                <h4 id=\"toto\"></h4>\n" +
-        "                <img id=\"titi\">\n" +
-        "                <div id=\"yesnoBtn\">\n" +
+        "                <h4 class='scale-transition scale-out' id=\"toto\"></h4>\n" +
+        "                <img class='scale-transition scale-out' id=\"titi\">\n" +
+        "                <div class='scale-transition scale-out' id=\"yesnoBtn\">\n" +
         "                    <a class=\"btn-floating btn-large waves-effect waves-light green pulse\" onclick=\"getNews()\"><i class=\"material-icons\">check</i></a>\n" +
         "                    <a class=\"btn-floating btn-large waves-effect waves-light red pulse\" id=\"no\" onclick=\"getNewPred()\"><i class=\"material-icons\">close</i></a>\n" +
         "                </div>\n" +
@@ -45,9 +45,7 @@ function loadFile (event) {
     var preloader = document.getElementById("preloader");
     document.getElementById("guessContainer").style.visibility = "visible";
     sleep(200).then((step1) => {
-        image.style.setProperty("-webkit-transition", "opacity 0.5s linear");
-        image.style.setProperty("opacity", "1.0");
-        image.style.setProperty("transition", "opacity 0.5s linear");
+        image.classList.replace("scale-out","scale-in");
         sleep(500).then((step2) => {
             document.getElementById("typewriter").innerHTML +=
                 "<h3  style=\"  overflow: hidden; /* Ensures the content is not revealed until the animation */\n" +
@@ -70,16 +68,12 @@ function loadFile (event) {
                     response.json().then(function (result) {
                         preloader.remove();
                         var toto = document.getElementById('toto');
-                        toto.style.setProperty("-webkit-transition", "opacity 1s linear");
-                        toto.style.setProperty("opacity", "1.0");
-                        toto.style.setProperty("transition", "opacity 1s linear");
+                        toto.classList.replace("scale-out","scale-in");
                         toto.innerText = result.name;
-                        document.getElementById("yesnoBtn").style.visibility = "visible";
+                        document.getElementById("yesnoBtn").classList.replace("scale-out","scale-in");
                         var titi = document.getElementById('titi');
-                        titi.style.setProperty("-webkit-transition", "opacity 1s linear");
-                        titi.style.setProperty("opacity", "1.0");
-                        titi.style.setProperty("transition", "opacity 1s linear");
                         titi.src = result.url;
+                        titi.classList.replace("scale-out","scale-in");
 
 
                     })
@@ -120,6 +114,7 @@ function getNews(predSentFromInput=null) {
         "                    </div>\n" +
         "                </div>";
     var image = document.getElementById('img');
+    image.classList.remove("scale-transition");
     image.style.setProperty("-webkit-transition", "max-height 2s");
     image.style.setProperty("transition", "max-height 2s");
 
@@ -129,6 +124,7 @@ function getNews(predSentFromInput=null) {
     }).then(function (response) {
         response.json().then(function (news) {
             var html = "";
+            image.style.setProperty("max-height", "25vh");
             news.forEach(function(n) {
                 console.log(n.title);
                 html +=
@@ -142,7 +138,7 @@ function getNews(predSentFromInput=null) {
                     "<div class='col m9 s9 l9'>" +
                     "      <div class=\"card-stacked\">\n" +
                     "        <div class=\"card-content\">\n" +
-                    "<a target='_blank' href=\""+n.url+"\"><span class=\"card-title\">"+n.title.substring(0,50) + "..."+"</span></a>\n" +
+                    "<a target='_blank' title='"+n.title+"' href=\""+n.url+"\"><span class=\"card-title\">"+n.title.substring(0,50) + "..."+"</span></a>\n" +
                     "          <p>"+n.description.substring(0,50)+"..."+"</p>\n" +
                     "        </div>\n" +
                     "      </div>\n" +
@@ -152,31 +148,24 @@ function getNews(predSentFromInput=null) {
             });
             sleep(2200).then((step1) => {
                 document.getElementById("news").innerHTML = html;
-                image.style.setProperty("max-height", "25vh");
-                sleep(2000).then((step2) => {
-                    document.getElementById('imgSent').innerHTML +=
-                        "  <div class=\"row center\">\n" +
-                        "<div class='col m6 l6 s12'>"+
-                        "\n" +
-                        "        <p>\n" +
-                        "            <label>\n" +
-                        "                <input class=\"with-gap\" id=\"csv\" value=\"csv\" name=\"download\" type=\"radio\" checked />\n" +
-                        "                <span>CSV</span>\n" +
-                        "            </label>\n" +
-                        "        </p>\n" +
-                        "</div>" +
-                        "<div class='col m6 l6 s12'>"+
-                        "        <p>\n" +
-                        "            <label>\n" +
-                        "                <input class=\"with-gap\" id=\"json\" value=\"json\" name=\"download\" type=\"radio\" />\n" +
-                        "                <span>JSON</span>\n" +
-                        "            </label>\n" +
-                        "        </p>\n" +
-                        "\n" +
-                        "</div>" +
-                        "<a id='dl' class=\"waves-effect waves-light btn green\"><i class=\"material-icons right\">file_download</i>Download news</a>\n" +
-                        "</div>"
-                    "    </div>";
+                document.getElementById('imgSent').innerHTML +=
+                    "  <div class='scale-transition scale-out' id='dlDiv' style='margin-top: 8vh' class=\"row center\">\n" +
+                    "\n" +
+                    "            <label>\n" +
+                    "                <input class=\"with-gap\" id=\"csv\" value=\"csv\" name=\"download\" type=\"radio\" checked />\n" +
+                    "                <span>CSV</span>\n" +
+                    "            </label>\n" +
+                    "            <label>\n" +
+                    "                <input class=\"with-gap\" id=\"json\" value=\"json\" name=\"download\" type=\"radio\" />\n" +
+                    "                <span>JSON</span>\n" +
+                    "            </label>\n" +
+                    "</div>" +
+                    "<a id='dl' class=\"scale-transition scale-out waves-effect waves-light btn green\"><i class=\"material-icons right\">file_download</i>Download news</a>\n" +
+                    "</div>"
+                "    </div>";
+                sleep(1000).then((step2) => {
+                    document.getElementById('dlDiv').classList.replace("scale-out","scale-in");
+                    document.getElementById('dl').classList.replace("scale-out","scale-in");
                     document.getElementById("dl").addEventListener('click',download);
                 });
             });
@@ -190,9 +179,10 @@ function getNewPred() {
         console.log("nbpred",nbpred);
         var toto = document.getElementById('toto');
         var titi = document.getElementById('titi');
-        titi.style.opacity = 0;
-        toto.style.opacity =0;
-        document.getElementById("yesnoBtn").style.visibility = "hidden";
+        var yesnoBtn = document.getElementById("yesnoBtn");
+        toto.classList.replace("scale-in","scale-out");
+        titi.classList.replace("scale-in","scale-out");
+        yesnoBtn.classList.replace("scale-in","scale-out");
         var typewriter = "";
         if(nbpred === 1) {
             typewriter = "or maybe...";
@@ -223,10 +213,9 @@ function getNewPred() {
                         sleep(2000).then( (step) => {
                             toto.innerHTML = result.name;
                             titi.src = result.url;
-                            console.log(result.name,result.url);
-                            titi.style.opacity = 1;
-                            toto.style.opacity =1;
-                            document.getElementById("yesnoBtn").style.visibility = "visible";
+                            titi.classList.replace("scale-out","scale-in");
+                            toto.classList.replace("scale-out","scale-in");
+                            yesnoBtn.classList.replace("scale-out","scale-in");
                         })
                     })
                 })
