@@ -4,7 +4,11 @@ const Clarifai = require('clarifai');
 const fs = require('fs');
 const multer = require('multer');
 const fetch = require('fetch').fetchUrl;
+const json2csv = require('json2csv').parse;
+
 var titreArticles = null;
+var predicted_name2 = null;
+var predicted_name3 = null;
 
 'use strict';
 const ImageSearchAPIClient = require('azure-cognitiveservices-imagesearch');
@@ -23,7 +27,6 @@ var upload = multer({ storage: storage });
 
 // The JavaScript client works in both Node.js and the browser.
 var express = require('express');
-var csv = require('csv-express')/* npm install csv-express*/
 var bodyParser = require("body-parser");
 var app = express();
 app.use(express.static('server'));
@@ -47,6 +50,8 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
         predicteur.models.predict("e466caa0619f444ab97497640cefc4dc", {base64: encoded}).then(
             function(response) {
                 let predicted_name = response.outputs[0].data.regions[0].data.concepts[0].name;
+                predicted_name2 = response.outputs[0].data.regions[0].data.concepts[1].name;
+                predicted_name3 = response.outputs[0].data.regions[0].data.concepts[2].name;
                 //replace this value with your valid subscription key.
                 let serviceKey = "0c10ee92fb0140b58d220bf33f12a68c";
 
@@ -58,15 +63,22 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
                 const sendQuery = async () => {
                     return await imageSearchApiClient.imagesOperations.search(predicted_name);
                 };
-
+                var path =  req.file.path;
+                fs.unlink(path, (err) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                });
                 sendQuery().then(imageResults => {
                     if (imageResults == null) {
                         console.log("No image results were found.");
                     }
                     else {
+
                         res.json({url: imageResults.value[0].contentUrl, name: predicted_name});
                     }
                 }).catch(err => console.error(err))
+
 
             },
             function(err) {
@@ -76,6 +88,16 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
     }
     else throw 'error';
 });
+
+app.get('/output/:nb_predict',  function (req,res) {
+    if (req.params.nb_predict == 1) {
+        res.json({'name':predicted_name2});
+    }else {
+        res.json({'name':predicted_name3});
+    }
+
+});
+
 app.get('/news/:celebrity', function(req,res) {
     fetch("https://newsapi.org/v2/everything?q=" + req.params.celebrity + "&apiKey=0738b24ebbfa4397b1857b42aea8bd2e", function (error, meta, body) {
         var articles = JSON.parse(body.toString()).articles;
@@ -98,7 +120,7 @@ app.get('/script', function(req, res){
     fs.readFile("client/js/script.js", function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/javascript'});
         res.write(data);
-        res.end()
+        res.end();
     })
 });
 
@@ -106,7 +128,7 @@ app.get('/materialize.min.css', function(req, res){
     fs.readFile("client/css/materialize.min.css", function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/css'});
         res.write(data);
-        res.end()
+        res.end();
     })
 });
 
@@ -122,23 +144,22 @@ app.get('/materialize.min.js', function(req, res){
     fs.readFile("client/js/materialize.min.js", function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/js'});
         res.write(data);
-        res.end()
+        res.end();
     })
 });
-
 app.get('/download', function(req,res) {
-
     res.format({
         'application/json': function () {
-            var tempoj = titreArticles;
 
-            res.json(tempoj);
+            res.json(titreArticles);
 
         },
 
         'application/csv': function () {
-            var tempoc = titreArticles;
-            res.csv(tempoc, true);
+            const csvString = json2csv(titreArticles);
+            res.set('Content-Type', 'text/csv');
+            res.status(200).send(csvString);
+
         }
     })
 });
