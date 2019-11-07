@@ -64,16 +64,28 @@ function enableButton() {
 
 function getNews() {
     document.getElementById("yesnoBtn").remove();
-    var html = "<div id='news' class='col m8 l8 s8 left'>";
-
     var prediction =document.getElementById("toto").innerText;
-    document.getElementById('toto').innerText = "";
-
     document.getElementById("guessingPart").remove();
+    document.getElementById("guessRow").innerHTML+=  "<div id='news' class='col m8 l8 s8 left'></div>";
+    document.getElementById("news").innerHTML=
+        "  <h4>Waiting for "+prediction+" news...</h4> <div class=\"preloader-wrapper big active\" style='margin-top: 10vh'>\n" +
+        "                    <div class=\"spinner-layer spinner-blue-only\">\n" +
+        "                        <div class=\"circle-clipper left\">\n" +
+        "                            <div class=\"circle\"></div>\n" +
+        "                        </div><div class=\"gap-patch\">\n" +
+        "                        <div class=\"circle\"></div>\n" +
+        "                    </div><div class=\"circle-clipper right\">\n" +
+        "                        <div class=\"circle\"></div>\n" +
+        "                    </div>\n" +
+        "                    </div>\n" +
+        "                </div>";
+
+
     fetch('/news/'+prediction, {
         method: 'GET'
     }).then(function (response) {
         response.json().then(function (news) {
+            var html = "";
             news.forEach(function(n) {
                 console.log(n.title);
                 html +=
@@ -95,8 +107,18 @@ function getNews() {
                     "</div>" +
                     "    </div>";
             });
-            html +="</div>";
-            document.getElementById("guessRow").innerHTML += html;
+            sleep(2200).then((step1) => {
+                document.getElementById("news").innerHTML = html;
+            });
+        })
+    })
+}
+
+function getNewPred() {
+    var nb_pred=1;
+    fetch('/output/'+nb_pred).then(response =>{
+        response.json().then(output =>{
+            console.log(output.name);
         })
     })
 }
