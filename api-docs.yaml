@@ -1,0 +1,140 @@
+swagger: '2.0'
+info:
+  description: "Quel est le but de notre application? L'utilisateur rentre l'image d'une personne dans la barre d'insersion, notre application va deviner de qui il s'agit. Si elle a bien deviné alors les actualités de la personne en question apparaîtront. Dans le cas contraire, l'utilisateur rentrera le nom lui-même et il aura quand même les actualités. Dans tous les cas, l'utilisateur pourra télécharger le fichier dans le format et la langue qui lui conviennent."
+
+  title: "Guess Who"
+  version: v1
+host: guesswho-opendata.herokuapp.com
+schemes:
+  - https
+basePath: /
+
+paths:
+  /predict:
+    post:
+      tags:
+        - "Serveur"
+      summary: "Prédire le nom de l'image entrée en input"
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Bad request
+
+  /image/{celebrity}:
+    get:
+      tags:
+        - "Serveur"
+      summary: "En entrant le nom de la célébrité recevoir son image issue de la recherche de l'API de recherche d'image Bing"
+      parameters:
+        - in: path
+          name: celebrity
+          type: string
+          description: "Le nom de la personnalité à chercher dans l'API"
+          required: true
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Bad request
+
+  /output/{nb_predict}:
+    get:
+      tags:
+        - "Serveur"
+      summary: "Charger les 2 et 3ème prédictions de l'API Clarify si la première prédiction n'est pas la bonne"
+      parameters:
+        - in: path
+          name: nb_predict
+          type: string
+          description: "Numéro de la prédiction voulue (1 ou 2)"
+          required: true
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Bad request
+
+  /news/{celebrity}:
+    get:
+      tags:
+        - "Serveur"
+      summary: "En entrant le nom de la célébrité recevoir ses news issues de la recherche de l'API 'News API' "
+      parameters:
+        - in: path
+          name: celebrity
+          type: string
+          description: "Le nom de la personnalité à chercher dans l'API de news"
+          required: true
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Bad request
+
+  /:
+    get:
+      tags:
+        - "Serveur"
+      summary: "Faire le lien avec le index.html du client"
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Bad request
+
+  /script:
+    get:
+      tags:
+        - "Serveur"
+      summary: "Faire le lien avec le script.js du client"
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Bad request
+
+  /materialize.min.css:
+    get:
+      tags:
+        - "Serveur"
+      summary: "Faire le lien avec le fichier materialize.min.css"
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Bad request
+
+  /style.css:
+    get:
+      tags:
+        - "Serveur"
+      summary: "Faire le lien avec le fichier style.css de mise en forme"
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Bad request
+
+  /materialize.min.js:
+    get:
+      tags:
+        - "Serveur"
+      summary: "Faire le lien avec le fichier materialize.min.js"
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Bad request
+
+  /download:
+    get:
+      tags:
+        - "Serveur"
+      summary: "Télécharger les news en json et en csv"
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Bad request
+
