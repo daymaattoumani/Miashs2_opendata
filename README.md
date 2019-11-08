@@ -30,4 +30,12 @@ Enfin, une liste d'actualité sur la célébrité sera retournée grâce à l'AP
 
 3. L'utilisateur a quoi qu'il arrive une liste d'actualités sur la personne insérée en image. Soit par le biais du bouton radio, soit à la soumission du nom de la célébrité après 3 essais, avec l'accès à la fonction getNews(). La requête GET effectuée vers le serveur par le fetch sur la route /news/_nom_de_la_celebrité fera appel à l'API des actualités et créera l'espace nécessaire dans le navigateur pour afficher les news.  <br> Cette fonction permet aussi d'afficher la possibilité de téléchargement des actualités: titre, url, description et photo. L'utilisateur a loisir d'exporter ces informations en json ou csv.
 
+## Difficultés rencontrées et perspectives
 
+Certains membres de l'équipe avaient des lacunes sur la connaissance du logiciel de partage Github. Nous avons donc souvent eu recours au pair programming pour mutualiser les ressources et augmenter la créativité du groupe.
+Aussi, certains n'étaient pas familier avec la notion de client et server par exemple et le partage du savoirà permis la montée en compétence de chaque membre du groupe. 
+<br> Nous avons été efficace dans le travail et nous n'avons pas semblé manquer de temps dans ce projet.
+
+Nous avons pensé à d'autres idées que seul le temps nous a empêché de réaliser:
+- entrainer le modèle clarifai avec les images importées... En effet, ce modèle a du mal à reconnaitre les célébrités françaises
+- ajouter une petite biographie de la personnalité
