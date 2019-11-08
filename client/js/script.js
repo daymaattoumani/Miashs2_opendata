@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     M.Modal.init(elems,{onOpenStart	: function () {
             document.getElementById("celebrityName").value = "";
         },onCloseEnd : function () {
+            document.getElementById("modal-title").innerHTML = "Alright, you won...";
             document.getElementById("submitCeleb").classList.replace("enabled","disabled");
         }});
 });
@@ -94,7 +95,7 @@ function enableButton() {
 }
 
 function getNews(predSentFromInput=null) {
-    document.getElementById("yesnoBtn").remove();
+    if(document.getElementById('yesnoBtn') !== null ) document.getElementById("yesnoBtn").remove();
     var prediction = "";
     if (predSentFromInput === null) {
         prediction = document.getElementById("toto").innerText;
@@ -103,7 +104,7 @@ function getNews(predSentFromInput=null) {
             prediction = predSentFromInput;
         console.log(prediction);
     }
-    document.getElementById("guessingPart").remove();
+    if(document.getElementById("guessingPart") != null) document.getElementById("guessingPart").remove();
     document.getElementById("guessRow").innerHTML+=  "<div id='news' class='col m8 l8 s8 left'></div>";
     document.getElementById("news").innerHTML=
         "  <h4>Waiting for "+prediction+" news...</h4> <div class=\"preloader-wrapper big active\" style='margin-top: 10vh'>\n" +
@@ -127,6 +128,11 @@ function getNews(predSentFromInput=null) {
         method: 'GET'
     }).then(function (response) {
         response.json().then(function (news) {
+            if (news.error === true) {
+                var instance = M.Modal.getInstance(document.getElementById("modal1"));
+                document.getElementById("modal-title").innerHTML += "<span class=\"new badge red\" data-badge-caption=\"celebrity not found\">Error:</span>";
+                return instance.open();
+            }
             var html = "";
             image.style.setProperty("max-height", "25vh");
             news.forEach(function(n) {
