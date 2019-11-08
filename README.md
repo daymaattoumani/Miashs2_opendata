@@ -8,24 +8,26 @@
 
 ## Guess Who?
 
-Quel est le but de notre application? L'utilisateur rentre l'image d'une personne dans la barre d'insersion, notre application va deviner de qui il s'agit. Si elle a bien deviné alors les actualités de la personne en question apparaîtront. Dans le cas contraire, l'utilisateur rentrera le nom lui-même et il aura quand même les actualités. Dans tous les cas, l'utilisateur pourra télécharger le fichier dans le format et la langue qui lui conviennent
+<b>Quel est le but de notre application?</b> <br>
+L'utilisateur rentre une image d'une personne dans la barre d'insertion, notre application va deviner de qui il s'agit. Si elle a bien deviné, alors les actualités de la personne en question apparaîtront. Dans le cas contraire, l'utilisateur rentrera le nom lui-même et il aura quand même des actualités. Dans tous les cas, l'utilisateur pourra télécharger le fichier contenant les news dans le format et la langue qui lui conviennent
 
 ## API
 
-Clarifai (https://www.clarifai.com/models/celebrity-image-recognition-model-e466caa0619f444ab97497640cefc4dc?fbclid=IwAR3QymrW3aZl7MSFJtzzgg9hvVVjDfjEu7LACxEdALKII0Wk5bBDdrXhYfk): Pour les prédiction de nom de célébrité à partir de l'insertion d'image
+L'API qui nous permet de faire des prédictions de nom de célebrité sur des images importées est Clarifai (https://www.clarifai.com/models/celebrity-image-recognition-model-e466caa0619f444ab97497640cefc4dc?fbclid=IwAR3QymrW3aZl7MSFJtzzgg9hvVVjDfjEu7LACxEdALKII0Wk5bBDdrXhYfk).
 
-API Recherche d’images Bing (https://docs.microsoft.com/fr-fr/azure/cognitive-services/bing-image-search/): A partir d'un mot faire un recherche d'image sur BING
+A partir de la prédiction effectuée par l'API précédente, nous utilisons une autre API qui trouvera une image correspondant à la célébrité. Pour celà, nous utilisons BINGAPI, l'API de Recherche d’images Bing (https://docs.microsoft.com/fr-fr/azure/cognitive-services/bing-image-search/).
 
-News API(https://newsapi.org/): A partir d'un nom fournit, sortie d'une liste d'actualité
+Enfin, une liste d'actualité sur la célébrité sera retournée grâce à l'API News API(https://newsapi.org/).
 
-## Acheminement
+## Déroulement
 
-1. On commence l'acheminement par demander à l'utilisateur de rentrer son image dans la barre d'insertion, et en cliquant sur "Guess" on active la fonction loadFile(event). Cette fonction permet d'une part de stocker l'image est de l'afficher à l'utilisateur sur la page. Elle permet aussi de faire un fetch sur la route "predict" du server et donc de récupérer le nom et l'image prédit par notre API Clarifai.
+1. On commence par demander à l'utilisateur de rentrer son image dans la barre d'insertion, et en cliquant sur "Guess" on active la fonction loadFile(event) chez le client. Cette fonction permet d'une part de stocker l'image dans le serveur et de l'afficher à l'utilisateur sur le navigateur. Elle permet aussi de faire une requête POST vers le serveur grâce à un fetch sur la route "predict" et donc de récupérer le nom prédit par notre API Clarifai et l'image correspondant avec l'API BING.
 
-2. Une fois que l'on a le nom et l'image prédits dans nos balises titi et toto,lutilisateur a 2 choix. Soit il valide la prédiction, soit il refuse le choix proposé.
+2. Une fois que l'on a le nom et l'image prédit dans nos balises titi et toto,l'utilisateur a 2 choix: soit il valide la prédiction, soit il refuse le choix proposé.
+    - Si il valide la prédiction, en cliquant sur le bouton de validation, l'utilisateur déclenche la fonction getNews(). Cette fonction va faire un fetch sur la route news/nom_de_la_célébrité pour récupérer les informations de l'API news. Elle va également modifier le html pour faire place à la présentation des news. 
+    - Si l'utilisateur ne valide pas la prédiction, la fonction getNewPred() est lancée. Cette fonction lance un fetch sur la route 'ouput' du server. D'abord 'ouput/1' qui récupère la 2ème prédiction de l'API et, si l'utilisateur décide de ne pas valider encore une fois, 'ouput/2' qui récupère la 3ème prédiction. 
+    <br>Au bout de ces 2 essais, l'application demande à l'utilisateur de rentrer le nom de la personne sur l'image insérée. Celà va ré-enclencher la fonction getNews() mais avec comme option le nom inséré par l'utilisateur avec un document.getElementById('celebrityName').value. 
 
-Si il valide la prédiction, en cliquant sur le bouton de validation l'utilisateur déclenche la fonction getNews(). Cette fonction va faire un fetch sur la route news/nom_de_la_célébrité pour récupérer les informations de l'API news. Elle va également modifier le html pour faire place à la présentation des news. 
+3. L'utilisateur a quoi qu'il arrive une liste d'actualités sur la personne insérée en image. Soit par le biais du bouton radio, soit à la soumission du nom de la célébrité après 3 essais, avec l'accès à la fonction getNews(). La requête GET effectuée vers le serveur par le fetch sur la route /news/_nom_de_la_celebrité fera appel à l'API des actualités et créera l'espace nécessaire dans le navigateur pour afficher les news.  <br> Cette fonction permet aussi d'afficher la possibilité de téléchargement des actualités: titre, url, description et photo. L'utilisateur a loisir d'exporter ces informations en json ou csv.
 
-Si l'utilisateur ne valide pas la prédiction, la fonction getNewPred() est lancée. Cette fonction lance un fetch sur la route 'ouput' du server. D'abord 'ouput/1' qui récupère la 2ème prédiction de l'API et, si l'utilisateur décide de ne pas valider encore une fois, 'ouput/2' qui récupère la 3ème prédiction. 
 
-Au bout de ces 2 essais l'application demande à l'utilisateur de rentrer le nom de la personne sur l'image insérée. Ce qui va renclencher la fonction getNews() mais avec comme option le nom insérer par l'utilisateur avec un document.getElementById('celebrityName').value. L'utilisateur a donc quoi qu'il arrive une liste d'actualités sur la personne insérée en image.

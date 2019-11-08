@@ -20,6 +20,10 @@ paths:
           description: Success response
         '400':
           description: Bad request
+        '404':
+          description: Image not found
+        '500':
+          description: Delete doesn't work
 
   /image/{celebrity}:
     get:
@@ -37,6 +41,10 @@ paths:
           description: Success response
         '400':
           description: Bad request
+        '404':
+          description: Image not found
+        '500':
+          description: Delete doesn't work
 
   /output/{nb_predict}:
     get:
@@ -52,8 +60,6 @@ paths:
       responses:
         '200':
           description: Success response
-        '400':
-          description: Bad request
 
   /news/{celebrity}:
     get:
@@ -69,8 +75,8 @@ paths:
       responses:
         '200':
           description: Success response
-        '400':
-          description: Bad request
+        '404':
+          description: Not found
 
   /:
     get:
@@ -135,6 +141,3 @@ paths:
       responses:
         '200':
           description: Success response
-        '400':
-          description: Bad request
-
