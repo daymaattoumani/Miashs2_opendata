@@ -31,6 +31,12 @@ var upload = multer({ storage: storage });
 var express = require('express');
 var bodyParser = require("body-parser");
 var app = express();
+const yaml = require("yamljs");
+const swaggerUi = require("swagger-ui-express"),
+    swaggerDocument = yaml.load('./api-docs.yaml');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(express.static('server'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
