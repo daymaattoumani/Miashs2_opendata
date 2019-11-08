@@ -132,7 +132,7 @@ app.get('/output/:nb_predict',  function (req,res) {
 });
 
 app.get('/news/:celebrity', function(req,res) {
-    fetch("https://newsapi.org/v2/everything?q=" + req.params.celebrity + "&apiKey=0738b24ebbfa4397b1857b42aea8bd2e", function (error, meta, body) {
+    fetch("https://newsapi.org/v2/everything?q=" + req.params.celebrity + "&language=en&apiKey=0738b24ebbfa4397b1857b42aea8bd2e", function (error, meta, body) {
         if(error){
             return res.status(500).json({message:error, error: true});
         }
