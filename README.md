@@ -6,6 +6,9 @@
 - Inan Mourad (mourad.inan@hotmail.fr)
 - Vernier Solal (verniersolal@gmail.com)
 
+##### Documentation
+https://guesswho-opendata.herokuapp.com/api-docs/
+
 ## Guess Who?
 
 <b>Quel est le but de notre application?</b> <br>
