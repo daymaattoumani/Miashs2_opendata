@@ -3,7 +3,11 @@ const sleep = (milliseconds) => {
 };
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.modal');
-    M.Modal.init(elems);
+    M.Modal.init(elems,{onOpenStart	: function () {
+            document.getElementById("celebrityName").value = "";
+        },onCloseEnd : function () {
+            document.getElementById("submitCeleb").classList.replace("enabled","disabled");
+        }});
 });
 var nbpred = 0;
 function loadFile (event) {
@@ -96,7 +100,7 @@ function getNews(predSentFromInput=null) {
         prediction = document.getElementById("toto").innerText;
     } else {
         console.log("TRUE"),
-        prediction = predSentFromInput
+            prediction = predSentFromInput;
         console.log(prediction);
     }
     document.getElementById("guessingPart").remove();
