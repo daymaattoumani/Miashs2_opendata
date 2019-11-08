@@ -5,6 +5,7 @@
     <title>Who is it?</title>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="/materialize.min.css"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="/style.css"  media="screen,projection"/>
@@ -15,6 +16,7 @@
 <h2 class="white-text center">Who is it?</h2>
 
 <div class="container" id="formContainer">
+
     <form id='form' method="post" action="/home" enctype="multipart/form-data">
         <div class="file-field input-field">
             <div class="btn">
@@ -41,7 +43,7 @@
 </div>
 <div id="modal1" class="modal">
     <div class="modal-content">
-        <h4>Alright, you won...</h4>
+        <h4 id="modal-title">Alright, you won...</h4>
         <p>Could you please tell me who is this celebrity ? I can still give you some news about her.</p>
         <div class="row center">
             <div class="input-field col s6">

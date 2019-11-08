@@ -1,5 +1,7 @@
 body {
-    background-color: #4285f4;
+    background: linear-gradient(#e66465, #9198e5);
+    height: 100vh;
+    font-family: 'Montserrat', serif;
 }
 /*NAVBAR BACKGROUND*/
 nav {
@@ -9,9 +11,22 @@ nav {
     box-shadow: none;
 }
 
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #454447;
+    opacity: 1; /* Firefox */
+}
+
+label {
+    color: #454447;
+}
+
 div.container {
-    background-color: whitesmoke;
+    background-color: #e0bfc2;
     border-radius: 10px;
+}
+
+.btn:hover {
+    background-color: #9198e5;
 }
 
 #formContainer{
@@ -29,7 +44,6 @@ div.container {
 }
 
 #toto {
-    opacity: 0;
     text-transform: capitalize;
 }
 
@@ -49,7 +63,6 @@ div.container {
 }
 
 #img {
-    opacity: 0;
     max-height: 40vh;
     max-width: 100%;
     margin-top: 8vh;
@@ -60,7 +73,8 @@ div.container {
 #titi {
     max-width: 30vh;
     max-height: 35vh;
-    opacity: 0;
+    border: solid 3px gold;
+    border-radius: 10px;
 }
 
 .row {
@@ -68,7 +82,6 @@ div.container {
 }
 
 #yesnoBtn {
-    visibility: hidden;
     margin-top: 2vh;
 }
 
@@ -76,6 +89,7 @@ div.container {
     height: 48vh;
     margin-top: 2vh;
     overflow-y: scroll;
+    padding: 1vh;
 }
 
 .card .card-content {
@@ -136,3 +150,4 @@ div.container {
     from, to { border-color: transparent }
     50% { border-color: black; }
 }
+

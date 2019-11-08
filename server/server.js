@@ -137,6 +137,9 @@ app.get('/news/:celebrity', function(req,res) {
             return res.status(500).json({message:error, error: true});
         }
         var articles = JSON.parse(body.toString()).articles;
+        if(articles.length === 0){
+            return res.status(404).json({message: "no celebrity found", error: true});
+        }
         var news = articles.filter(a => a.urlToImage != null && a.description != null).map(function(a){
             return {title: a.title, image: a.urlToImage, url: a.url, description: a.description};
         });
