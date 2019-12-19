@@ -61,7 +61,7 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
                 predicted_name2 = response.outputs[0].data.regions[0].data.concepts[1].name;
                 predicted_name3 = response.outputs[0].data.regions[0].data.concepts[2].name;
                 //replace this value with your valid subscription key.
-                let serviceKey = "0c10ee92fb0140b58d220bf33f12a68c";
+                let serviceKey = "5d4f368b5f6745d0b61c3d9f1f94c9af";
 
                 //instantiate the image search client
                 let credentials = new CognitiveServicesCredentials(serviceKey);
