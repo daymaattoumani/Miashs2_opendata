@@ -102,7 +102,7 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
 });
 
 app.get('/image/:celebrity',  function (req,res) {
-    let serviceKey = "0c10ee92fb0140b58d220bf33f12a68c";
+    let serviceKey = "0288b5037a144df0bf1ac9cda139620a";
     let predicted_name = req.params.celebrity;
     //instantiate the image search client
     let credentials = new CognitiveServicesCredentials(serviceKey);
