@@ -52,7 +52,7 @@ function base64_encode(file) {
 app.post('/predict', upload.single('celebrity'), function(req,res){
     if(req.file) {
         const predicteur = new Clarifai.App({
-            apiKey: '5cc2e6a2ca6342c8adec0429f0627af3'
+            apiKey: 'b73185e5b0f64ddcb20ef3befac8c563'
         });
         var encoded = base64_encode(req.file.path);
         predicteur.models.predict("e466caa0619f444ab97497640cefc4dc", {base64: encoded}).then(
@@ -61,7 +61,7 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
                 predicted_name2 = response.outputs[0].data.regions[0].data.concepts[1].name;
                 predicted_name3 = response.outputs[0].data.regions[0].data.concepts[2].name;
                 //replace this value with your valid subscription key.
-                let serviceKey = "5d4f368b5f6745d0b61c3d9f1f94c9af";
+                let serviceKey = "4f0ad3c7abe24e69bb4e2620bbb99982";
 
                 //instantiate the image search client
                 let credentials = new CognitiveServicesCredentials(serviceKey);
@@ -102,7 +102,7 @@ app.post('/predict', upload.single('celebrity'), function(req,res){
 });
 
 app.get('/image/:celebrity',  function (req,res) {
-    let serviceKey = "5d4f368b5f6745d0b61c3d9f1f94c9af";
+    let serviceKey = "4f0ad3c7abe24e69bb4e2620bbb99982";
     let predicted_name = req.params.celebrity;
     //instantiate the image search client
     let credentials = new CognitiveServicesCredentials(serviceKey);
